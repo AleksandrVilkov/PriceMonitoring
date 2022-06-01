@@ -35,7 +35,7 @@ public class PerekrestokParser implements Parser {
             logger.warning("There is a null value, it is impossible to create a product!");
             return null;
         }
-        return new Product(name, price, "perekrestok");
+        return new Product(name, price, "perekrestok", url);
     }
 }
 

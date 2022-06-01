@@ -3,14 +3,20 @@ package com.vilkov.PriceMonitoring.model;
 import java.util.Objects;
 
 public class Product {
-    String name;
-    String price;
-    String shop;
+    private String ulr;
+    private String name;
+    private String price;
+    private String shop;
 
-    public Product(String name, String price, String shop) {
+    public Product(String name, String price, String shop, String url) {
         this.name = name;
         this.price = price;
         this.shop = shop;
+        this.ulr = url;
+    }
+
+    public String getUlr() {
+        return ulr;
     }
 
     public String getName() {
@@ -39,11 +45,11 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return name.equals(product.name);
+        return ulr.equals(product.ulr);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(ulr);
     }
 }
