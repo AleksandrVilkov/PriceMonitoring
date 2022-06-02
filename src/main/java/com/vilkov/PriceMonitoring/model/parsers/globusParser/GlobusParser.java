@@ -1,7 +1,7 @@
-package com.vilkov.PriceMonitoring.parsers.globusParser;
+package com.vilkov.PriceMonitoring.model.parsers.globusParser;
 
 import com.vilkov.PriceMonitoring.model.*;
-import com.vilkov.PriceMonitoring.parsers.Parser;
+import com.vilkov.PriceMonitoring.model.parsers.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

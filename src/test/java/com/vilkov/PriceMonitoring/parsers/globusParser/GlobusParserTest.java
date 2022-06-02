@@ -1,7 +1,7 @@
-package com.vilkov.PriceMonitoring.parsers.globusParser.globusParser;
+package com.vilkov.PriceMonitoring.parsers.globusParser;
 
 import com.vilkov.PriceMonitoring.model.Product;
-import com.vilkov.PriceMonitoring.parsers.globusParser.GlobusParser;
+import com.vilkov.PriceMonitoring.model.parsers.globusParser.GlobusParser;
 import org.junit.jupiter.api.Test;
 
 public class GlobusParserTest {
