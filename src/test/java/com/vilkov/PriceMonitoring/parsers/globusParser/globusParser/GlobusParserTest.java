@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.perekrestokParser;
+package com.vilkov.PriceMonitoring.parsers.globusParser.globusParser;
 
 import com.vilkov.PriceMonitoring.model.Product;
 import com.vilkov.PriceMonitoring.parsers.globusParser.GlobusParser;
