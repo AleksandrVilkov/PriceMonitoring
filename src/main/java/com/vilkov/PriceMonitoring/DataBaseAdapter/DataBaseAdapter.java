@@ -27,19 +27,4 @@ public class DataBaseAdapter implements ProductDataStorage {
     public void updateProduct(String id) {
 
     }
-
-    @Override
-    public void clearDataBase() {
-
-    }
-
-    @Override
-    public void createCollection(String name) {
-
-    }
-
-    @Override
-    public void clearCollection(String collection) {
-
-    }
 }
