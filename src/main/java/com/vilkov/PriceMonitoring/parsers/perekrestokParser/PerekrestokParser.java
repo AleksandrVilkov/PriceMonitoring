@@ -1,6 +1,8 @@
 package com.vilkov.PriceMonitoring.parsers.perekrestokParser;
 
+import com.vilkov.PriceMonitoring.model.Message;
 import com.vilkov.PriceMonitoring.model.Product;
+import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.parsers.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,10 +17,11 @@ public class PerekrestokParser implements Parser {
         Logger logger = Logger.getLogger("PerekrestokParser");
         if (!url.contains("www.perekrestok.ru")) {
             logger.warning("url does not apply to www.perekrestok.ru");
-            return null;
+            return new Product(null, null, null, null,
+                    new Message(Status.ERROR, "url does not apply to www.perekrestok.ru"));
         }
-        String price = null;
-        String name = null;
+        String price;
+        String name;
         try {
             Document document = Jsoup.connect(url).get();
             price = document.select("div.price-new")
@@ -29,13 +32,16 @@ public class PerekrestokParser implements Parser {
 
         } catch (IOException e) {
             logger.warning(e.getMessage());
+            return new Product(null, null, null, null,
+                    new Message(Status.ERROR, e.getMessage()));
         }
 
         if (price == null || name == null) {
             logger.warning("There is a null value, it is impossible to create a product!");
-            return null;
+            return new Product(null, null, null, null,
+                    new Message(Status.ERROR, "There is a null value, it is impossible to create a product!"));
         }
-        return new Product(name, price, "perekrestok", url);
+        return new Product(name, price, "perekrestok", url, new Message(Status.SUCCESS, "Success!"));
     }
 }
 

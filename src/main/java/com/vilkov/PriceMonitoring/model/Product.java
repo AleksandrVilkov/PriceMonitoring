@@ -8,11 +8,14 @@ public class Product {
     private String price;
     private String shop;
 
-    public Product(String name, String price, String shop, String url) {
+    private Message message;
+
+    public Product(String name, String price, String shop, String url, Message message) {
         this.name = name;
         this.price = price;
         this.shop = shop;
         this.ulr = url;
+        this.message = message;
     }
 
     public String getUlr() {
@@ -26,10 +29,18 @@ public class Product {
     public String getPrice() {
         return price;
     }
+
     public String getShop() {
         return shop;
     }
 
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
+    }
 
     @Override
     public String toString() {
