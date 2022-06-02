@@ -2,15 +2,17 @@ package com.vilkov.PriceMonitoring.model.dataStorage;
 
 import com.vilkov.PriceMonitoring.model.Product;
 
+import java.util.List;
+
 public interface ProductDataStorage {
 
-    public void createProduct(Product product);
+    public boolean createProduct(Product product);
 
-    public void readProduct(String id);
+    public List<Product> readProducts();
 
-    public void updateProduct(String id);
+    public boolean updateProduct(Product product);
 
-    public void deleteProduct(String id);
+    public boolean deleteProduct(String url);
 
 
 }

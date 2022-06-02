@@ -1,28 +1,33 @@
 package com.vilkov.PriceMonitoring.model;
 
+import com.vilkov.PriceMonitoring.dataBaseAdapter.Config;
 import com.vilkov.PriceMonitoring.model.dataStorage.ProductDataStorage;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 public class ProductHelper {
     private static Logger logger = Logger.getLogger("ProductHelper");
-    private static ProductDataStorage dataStorage;
+
+    private static ProductDataStorage dataStorage = Config.getProductDataStorage();
 
     public static void createProductToDataBase(Product product) {
         dataStorage.createProduct(product);
     }
 
-    public static void readProductInDataBase(String id) {
-        dataStorage.readProduct(id);
+    public static void readProductInDataBase() {
+        dataStorage.readProducts();
     }
 
     public static void deleteProductInDataBase(String id) {
         dataStorage.deleteProduct(id);
     }
 
-    public static void updateProductInDataBase(String id) {
-        dataStorage.updateProduct(id);
+    public static void updateProductInDataBase(Product product) {
+        dataStorage.updateProduct(product);
     }
 
 

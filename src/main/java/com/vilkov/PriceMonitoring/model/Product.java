@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Product {
+    private int id;
     private String ulr;
     private String name;
     private Money price;
@@ -19,6 +20,14 @@ public class Product {
         this.ulr = url;
         this.date = date;
         this.message = message;
+        this.id = hashCode();
+    }
+
+    public Product() {
+
+    }
+    public int getId() {
+        return id;
     }
 
     public Date getDate() {
@@ -63,11 +72,11 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return ulr.equals(product.ulr);
+        return id == product.id && Objects.equals(ulr, product.ulr) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(shop, product.shop) && Objects.equals(date, product.date) && Objects.equals(message, product.message);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ulr);
+        return Objects.hash(id, ulr, name, price, shop);
     }
 }
