@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Product {
     private String ulr;
     private String name;
-    private String price;
+    private Money price;
     private String shop;
 
     private Message message;
 
-    public Product(String name, String price, String shop, String url, Message message) {
+    public Product(String name, Money price, String shop, String url, Message message) {
         this.name = name;
         this.price = price;
         this.shop = shop;
@@ -26,7 +26,7 @@ public class Product {
         return name;
     }
 
-    public String getPrice() {
+    public Money getPrice() {
         return price;
     }
 

@@ -1,8 +1,6 @@
 package com.vilkov.PriceMonitoring.parsers.perekrestokParser;
 
-import com.vilkov.PriceMonitoring.model.Message;
-import com.vilkov.PriceMonitoring.model.Product;
-import com.vilkov.PriceMonitoring.model.Status;
+import com.vilkov.PriceMonitoring.model.*;
 import com.vilkov.PriceMonitoring.parsers.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,14 +18,18 @@ public class PerekrestokParser implements Parser {
             return new Product(null, null, null, null,
                     new Message(Status.ERROR, "url does not apply to www.perekrestok.ru"));
         }
-        String price;
+        Money price = new Money();
         String name;
         try {
             Document document = Jsoup.connect(url).get();
-            price = document.select("div.price-new")
+            double amount = Double.parseDouble(document.select("div.price-new")
                     .first().childNode(0).toString()
                     .replace("\n", "")
-                    .replace("&nbsp;", "");
+                    .replace("&nbsp;", "")
+                    .replace("₽", "")
+                    .replace(",", "."));
+
+            price.setAmount(amount).setCurrency(Currency.RUB);
             name = document.title().replace(" - купить с доставкой на дом в Перекрёстке", "");
 
         } catch (IOException e) {
