@@ -1,5 +1,6 @@
 package com.vilkov.PriceMonitoring.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Product {
@@ -8,14 +9,20 @@ public class Product {
     private Money price;
     private String shop;
 
+    private Date date;
     private Message message;
 
-    public Product(String name, Money price, String shop, String url, Message message) {
+    public Product(String name, Money price, String shop, String url, Date date, Message message) {
         this.name = name;
         this.price = price;
         this.shop = shop;
         this.ulr = url;
+        this.date = date;
         this.message = message;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public String getUlr() {

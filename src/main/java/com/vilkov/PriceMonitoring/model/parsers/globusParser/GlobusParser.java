@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Logger;
 
 public class GlobusParser implements Parser {
@@ -16,7 +17,7 @@ public class GlobusParser implements Parser {
         Logger logger = Logger.getLogger("GlobusParser");
         if (!url.contains("www.globus.ru")) {
             logger.warning("url does not apply to www.globus.ru");
-            return new Product(null, null, null, null,
+            return new Product(null, null, null, null, new Date(),
                     new Message(Status.ERROR, "url does not apply to www.globus.ru"));
         }
 
@@ -40,15 +41,15 @@ public class GlobusParser implements Parser {
 
         } catch (IOException e) {
             logger.warning(e.getMessage());
-            return new Product(null, null, null, null,
+            return new Product(null, null, null, null, new Date(),
                     new Message(Status.ERROR, e.getMessage()));
         }
 
         if (price.getAmount() == 0) {
             logger.warning("There is a null value, it is impossible to create a product!");
-            return new Product(null, null, null, null,
+            return new Product(null, null, null, null, new Date(),
                     new Message(Status.ERROR, "There is a null value, it is impossible to create a product!"));
         }
-        return new Product(name, price, "globus", url, new Message(Status.SUCCESS, "Success!"));
+        return new Product(name, price, "globus", url, new Date(), new Message(Status.SUCCESS, "Success!"));
     }
 }

@@ -1,11 +1,12 @@
 package com.vilkov.PriceMonitoring.DataBaseAdapter;
 
 import com.vilkov.PriceMonitoring.model.Product;
+import com.vilkov.PriceMonitoring.model.dataStorage.ProductDataStorage;
 
 import java.beans.JavaBean;
 
 @JavaBean
-public class DataBaseAdapter implements com.vilkov.PriceMonitoring.model.dataStorage.DataStorage {
+public class DataBaseAdapter implements ProductDataStorage {
     //TODO реализовать подклчюение к монго
 
     @Override
@@ -13,7 +14,7 @@ public class DataBaseAdapter implements com.vilkov.PriceMonitoring.model.dataSto
     }
 
     @Override
-    public void saveProduct(Product product) {
+    public void createProduct(Product product) {
 
     }
 
