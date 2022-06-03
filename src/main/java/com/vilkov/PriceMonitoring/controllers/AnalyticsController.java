@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.controller;
+package com.vilkov.PriceMonitoring.controllers;
 
 
 import org.springframework.stereotype.Controller;

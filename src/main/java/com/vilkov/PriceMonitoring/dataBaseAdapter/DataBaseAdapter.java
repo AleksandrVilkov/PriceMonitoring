@@ -18,7 +18,7 @@ public class DataBaseAdapter implements DataStorageInterface {
 
     @Override
     public boolean createEntity(BaseEntity baseEntity, Client client) {
-        try (var mongoClient = MongoClients.create()) {
+        try (MongoClient mongoClient = MongoClients.create()) {
             MongoDatabase mongoDatabase = mongoClient.getDatabase(client.getClientID());
             MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(baseEntity.getClass().toString());
             if (baseEntity instanceof MonitoringList) {
@@ -60,6 +60,7 @@ public class DataBaseAdapter implements DataStorageInterface {
         if (baseEntity instanceof MonitoringList) {
             deleteEntity(client, MonitoringList.class);
             createEntity(baseEntity, client);
+            return true;
         }
         return false;
     }

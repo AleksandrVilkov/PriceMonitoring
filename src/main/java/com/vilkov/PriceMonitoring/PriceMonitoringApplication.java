@@ -8,6 +8,5 @@ public class PriceMonitoringApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PriceMonitoringApplication.class, args);
-
     }
 }
