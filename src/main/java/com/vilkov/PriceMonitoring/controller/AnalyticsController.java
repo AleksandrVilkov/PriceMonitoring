@@ -1,17 +1,14 @@
 package com.vilkov.PriceMonitoring.controller;
 
-public class Controller {
 
-    //TODO добавить продкукт в отслеживаемые
-    //TODO удалить продукут из отслеживаемых
-    //TODO задать настройки крон
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-    //TODO посмотреть настрйки крон
-    //TODO посмотреть все продукты, которые отслеживаются
-
+@Controller
+@RequestMapping("/analytics")
+public class AnalyticsController {
     //TODO получить PDF по выбранным товарам
     //TODO посмотреть динамику конкретного продукта за конкретный период
     //TODO Получить динамику цен по конкрктному продукту
     //TODO посмотреть динамику всех продуктов за конкретный период
-
 }

@@ -7,15 +7,20 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.logging.Logger;
+
 @Configuration
 @EnableScheduling
 @ConditionalOnProperty(name = "scheduler.enabled", matchIfMissing = true)
 public class Cron {
 
+    Logger logger = Logger.getLogger("CRON");
     @Scheduled(fixedRate = Config.RECEIVE_TIME_CURRENT_PRICES)
     @Async
-    public void getProducts() {
+    public void getNewProducts() {
+        logger.info("Start cron-task: getNewProducts");
         ProductHelper.getAndSaveCurrentPricesOfProducts();
+        logger.info("Cron-task getNewProducts is completed");
     }
 
 }
