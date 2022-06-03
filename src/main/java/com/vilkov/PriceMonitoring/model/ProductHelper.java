@@ -15,8 +15,8 @@ public class ProductHelper {
         dataStorage.createProduct(product);
     }
 
-    public static void readProductInDataBase() {
-        dataStorage.readProducts();
+    public static List<Product> readProductInDataBase() {
+       return dataStorage.readProducts();
     }
 
     public static void deleteProductInDataBase(String id) {
