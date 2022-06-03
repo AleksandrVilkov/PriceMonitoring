@@ -3,10 +3,7 @@ package com.vilkov.PriceMonitoring.model;
 import com.vilkov.PriceMonitoring.dataBaseAdapter.Config;
 import com.vilkov.PriceMonitoring.model.dataStorage.ProductDataStorage;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class ProductHelper {
@@ -35,8 +32,11 @@ public class ProductHelper {
         Map<String, TreeSet<FixedPrice>> result = new HashMap<>();
         if (!products.isEmpty()) {
             for (Product product : products) {
-                String name = product.getName();
-                FixedPrice fixedPrice = new FixedPrice().setPrice(product.getPrice()).setDate(product.getDate());
+                String name = product.getName().toLowerCase(Locale.ROOT);
+                FixedPrice fixedPrice = new FixedPrice()
+                        .setPrice(product.getPrice())
+                        .setDate(product.getDate())
+                        .setShop(product.getShop());
                 if (result.containsKey(name)) {
                     result.get(name).add(fixedPrice);
                 } else {
