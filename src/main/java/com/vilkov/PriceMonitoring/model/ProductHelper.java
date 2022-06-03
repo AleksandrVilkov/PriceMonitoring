@@ -2,6 +2,8 @@ package com.vilkov.PriceMonitoring.model;
 
 import com.vilkov.PriceMonitoring.dataBaseAdapter.Config;
 import com.vilkov.PriceMonitoring.model.dataStorage.ProductDataStorage;
+import com.vilkov.PriceMonitoring.model.parsers.ParserHelper;
+import com.vilkov.PriceMonitoring.model.parsers.perekrestokParser.PerekrestokParser;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -16,7 +18,7 @@ public class ProductHelper {
     }
 
     public static List<Product> readProductInDataBase() {
-       return dataStorage.readProducts();
+        return dataStorage.readProducts();
     }
 
     public static void deleteProductInDataBase(String id) {
@@ -26,7 +28,6 @@ public class ProductHelper {
     public static void updateProductInDataBase(Product product) {
         dataStorage.updateProduct(product);
     }
-
 
     public static Map<String, TreeSet<FixedPrice>> getSortedPrices(List<Product> products) {
         Map<String, TreeSet<FixedPrice>> result = new HashMap<>();
@@ -53,5 +54,30 @@ public class ProductHelper {
     public static FixedPrice getFixedPriceFromProduct(Product product) {
         return new FixedPrice().setPrice(product.getPrice()).setDate(product.getDate());
     }
+
+
+    public static void getAndSaveCurrentPricesOfProducts() {
+        Set<String> urls = ProductHelper.getAllProductUrlsFromDataBase();
+        List<Product> result = new ArrayList<>();
+
+        for (String url : urls) {
+            result.add(ParserHelper.getProductsByAllShops(url));
+        }
+
+        for (Product product : result) {
+            if (product != null && product.getMessage().getStatus().equals(Status.SUCCESS))
+                ProductHelper.createProductToDataBase(product);
+        }
+    }
+
+    private static Set<String> getAllProductUrlsFromDataBase() {
+        List<Product> products = readProductInDataBase();
+        Set<String> result = new HashSet<>();
+        for (Product product : products) {
+            result.add(product.getUlr());
+        }
+        return result;
+    }
+
 
 }
