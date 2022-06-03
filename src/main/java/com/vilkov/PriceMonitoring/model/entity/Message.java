@@ -1,6 +1,8 @@
-package com.vilkov.PriceMonitoring.model;
+package com.vilkov.PriceMonitoring.model.entity;
 
-public class Message {
+import com.vilkov.PriceMonitoring.model.Status;
+
+public class Message implements BaseEntity {
     private Status status;
     private String message;
 

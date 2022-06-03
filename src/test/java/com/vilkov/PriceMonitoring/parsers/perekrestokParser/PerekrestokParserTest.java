@@ -1,6 +1,6 @@
 package com.vilkov.PriceMonitoring.parsers.perekrestokParser;
 
-import com.vilkov.PriceMonitoring.model.Product;
+import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.parsers.perekrestokParser.PerekrestokParser;
 import org.junit.Assert;

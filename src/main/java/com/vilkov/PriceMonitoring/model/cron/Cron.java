@@ -1,5 +1,6 @@
 package com.vilkov.PriceMonitoring.model.cron;
 
+import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.ProductHelper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ public class Cron {
     @Async
     public void getNewProducts() {
         logger.info("Start cron-task: getNewProducts");
-        ProductHelper.getAndSaveCurrentPricesOfProducts();
+        ProductHelper.getAndSaveCurrentPricesOfProducts(new Client("t"));
         logger.info("Cron-task getNewProducts is completed");
     }
 

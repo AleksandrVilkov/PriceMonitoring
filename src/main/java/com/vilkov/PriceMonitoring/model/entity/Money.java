@@ -1,6 +1,6 @@
-package com.vilkov.PriceMonitoring.model;
+package com.vilkov.PriceMonitoring.model.entity;
 
-public class Money {
+public class Money implements BaseEntity {
     private double amount;
     private Currency currency;
 

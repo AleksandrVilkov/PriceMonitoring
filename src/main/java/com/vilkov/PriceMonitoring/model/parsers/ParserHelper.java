@@ -1,6 +1,6 @@
 package com.vilkov.PriceMonitoring.model.parsers;
 
-import com.vilkov.PriceMonitoring.model.Product;
+import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.parsers.globusParser.GlobusParser;
 import com.vilkov.PriceMonitoring.model.parsers.perekrestokParser.PerekrestokParser;
 

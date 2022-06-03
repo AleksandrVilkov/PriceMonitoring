@@ -1,9 +1,9 @@
-package com.vilkov.PriceMonitoring.model;
+package com.vilkov.PriceMonitoring.model.entity;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class Product {
+public class Product implements BaseEntity {
     private int id;
     private String ulr;
     private String name;
@@ -13,6 +13,8 @@ public class Product {
     private Date date;
     private Message message;
 
+    private String type;
+
     public Product(String name, Money price, String shop, String url, Date date, Message message) {
         this.name = name;
         this.price = price;
@@ -21,11 +23,13 @@ public class Product {
         this.date = date;
         this.message = message;
         this.id = hashCode();
+        this.type = Product.class.toString();
     }
 
     public Product() {
 
     }
+
     public int getId() {
         return id;
     }
@@ -52,6 +56,10 @@ public class Product {
 
     public Message getMessage() {
         return message;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setMessage(Message message) {

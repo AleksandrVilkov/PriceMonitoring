@@ -1,6 +1,10 @@
 package com.vilkov.PriceMonitoring.model.parsers.perekrestokParser;
 
 import com.vilkov.PriceMonitoring.model.*;
+import com.vilkov.PriceMonitoring.model.entity.Currency;
+import com.vilkov.PriceMonitoring.model.entity.Message;
+import com.vilkov.PriceMonitoring.model.entity.Money;
+import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.parsers.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

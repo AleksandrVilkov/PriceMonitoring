@@ -1,16 +1,26 @@
-package com.vilkov.PriceMonitoring.model;
+package com.vilkov.PriceMonitoring.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonitoringList {
+public class MonitoringList implements BaseEntity {
     private List<String> urls;
+    private String type;
+
 
     public MonitoringList() {
-        urls = new ArrayList<>();
+        this.urls = new ArrayList<>();
+        this.type = MonitoringList.class.toString();
+    }
+    public MonitoringList(List<String> urls) {
+        this.urls = urls;
+        this.type = MonitoringList.class.toString();
+    }
+    public String getType() {
+        return type;
     }
 
-    public List<String> getUrl() {
+    public List<String> getUrls() {
         return urls;
     }
 
@@ -18,6 +28,7 @@ public class MonitoringList {
         this.urls = urls;
         return null;
     }
+
     public boolean addUrl(String url) {
         if (!this.urls.contains(url)) {
             this.urls.add(url);

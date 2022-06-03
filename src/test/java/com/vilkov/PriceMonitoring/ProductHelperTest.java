@@ -1,7 +1,8 @@
 package com.vilkov.PriceMonitoring;
 
 import com.vilkov.PriceMonitoring.model.*;
-import com.vilkov.PriceMonitoring.model.Currency;
+import com.vilkov.PriceMonitoring.model.entity.*;
+import com.vilkov.PriceMonitoring.model.entity.Currency;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,9 @@
-package com.vilkov.PriceMonitoring.model;
+package com.vilkov.PriceMonitoring.model.entity;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class FixedPrice implements Comparable {
+public class FixedPrice implements Comparable, BaseEntity {
     Date date;
     Money price;
 
