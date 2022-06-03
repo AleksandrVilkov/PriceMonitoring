@@ -9,6 +9,14 @@ public class Message {
         message = message;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public Status getStatus() {
         return status;
     }

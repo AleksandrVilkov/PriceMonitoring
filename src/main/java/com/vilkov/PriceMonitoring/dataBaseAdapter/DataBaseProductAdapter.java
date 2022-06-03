@@ -55,7 +55,7 @@ public class DataBaseProductAdapter implements ProductDataStorage {
         try (MongoClient mongoClient = (MongoClient) Config.getMongoClient()) {
             MongoDatabase database = mongoClient.getDatabase(Config.DATABASE_NAME);
             MongoCollection<Document> collection = database.getCollection(Product.class.toString());
-            collection.deleteOne(eq("url",url));
+            collection.deleteMany(eq("url",url));
             return true;
         } catch (Exception e) {
             logger.warning("Не удалось удалить документ: " + e.getMessage());

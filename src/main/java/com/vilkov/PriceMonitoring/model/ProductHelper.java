@@ -3,7 +3,6 @@ package com.vilkov.PriceMonitoring.model;
 import com.vilkov.PriceMonitoring.dataBaseAdapter.Config;
 import com.vilkov.PriceMonitoring.model.dataStorage.ProductDataStorage;
 import com.vilkov.PriceMonitoring.model.parsers.ParserHelper;
-import com.vilkov.PriceMonitoring.model.parsers.perekrestokParser.PerekrestokParser;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -21,8 +20,8 @@ public class ProductHelper {
         return dataStorage.readProducts();
     }
 
-    public static void deleteProductInDataBase(String id) {
-        dataStorage.deleteProduct(id);
+    public static boolean deleteProductInDataBase(String url) {
+      return dataStorage.deleteProduct(url);
     }
 
     public static void updateProductInDataBase(Product product) {
@@ -61,7 +60,7 @@ public class ProductHelper {
         List<Product> result = new ArrayList<>();
 
         for (String url : urls) {
-            result.add(ParserHelper.getProductsByAllShops(url));
+            result.add(ParserHelper.getProduct(url));
         }
 
         for (Product product : result) {

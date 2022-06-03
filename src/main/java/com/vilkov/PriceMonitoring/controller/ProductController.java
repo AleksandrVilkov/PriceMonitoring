@@ -1,20 +1,28 @@
 package com.vilkov.PriceMonitoring.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import com.vilkov.PriceMonitoring.model.Product;
+import com.vilkov.PriceMonitoring.model.ProductHelper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+* Работа с продуктами.
+ * /product/add/{url} - добавит объект в лист монитора.
+ * В дальнейшем, по url объекта будет получать информацию о цене на момент запроса, и повторно сохранять в БД с заданным интервалом.
+ *
+ *
+ * /product/delete/{url} - удалит url из листа монитора. Прайсинг производиться не будет
+* */
 @org.springframework.stereotype.Controller
 @RequestMapping("/product")
 public class ProductController {
-
-    //TODO добавить продкукт в отслеживаемые
-    @PostMapping("/add")
-    public boolean addNewProduct(String url) {
-        return true;
+    @GetMapping("/add/{url}")
+    public Product addNewProduct(@PathVariable String url) {
+        return null;
     }
-
-
-    //TODO удалить продукут из отслеживаемых
-    //TODO задать настройки крон
-
+    @GetMapping("/delete/{url}")
+    public boolean deleteProduct(@PathVariable String url) {
+       return ProductHelper.deleteProductInDataBase(url);
+    }
 }
