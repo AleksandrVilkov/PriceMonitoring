@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/product")
@@ -43,7 +42,7 @@ public class ProductController {
             if (baseEntity instanceof Product) {
                 Date productDate = ((Product) baseEntity).getDate();
                 if (!productDate.before(startDate) && !productDate.after(endDate))
-                products.add((Product) baseEntity);
+                    products.add((Product) baseEntity);
             }
         }
 
