@@ -29,8 +29,10 @@ public class MonitoringUrlsController {
             }
         }
         if (result.getUrls().contains(url)) {
+            message.setStatus("SUCCESS");
             message.setMessageText(message.getMessageText() + "Url не добавлен, потому что уже существует");
             logger.warning("url already exists");
+            return message;
         } else {
             result.getUrls().add(url);
             logger.info("url added to client " + clientID);
@@ -39,6 +41,7 @@ public class MonitoringUrlsController {
         if (MonitoringListHelper.updateMonitoringList(result, client)) {
             message.setStatus("SUCCESS");
             message.setMessageText("Url добавлен");
+            return message;
         } else {
             message.setStatus("ERROR");
             message.setMessageText("Ошибка выполнения");
