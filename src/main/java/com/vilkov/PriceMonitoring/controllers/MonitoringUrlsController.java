@@ -42,12 +42,38 @@ public class MonitoringUrlsController {
 
         if (MonitoringListHelper.updateMonitoringList(result, client)) {
             message.setStatus("SUCCESS");
+            message.setMessageText("Url добавлен");
         } else {
             message.setStatus("ERROR");
             message.setMessageText("Ошибка выполнения");
             logger.warning("runtime error");
         }
         return message;
+    }
+
+    @GetMapping("/delete/{clientID}/{url}")
+    public Message deleteUrlFromMonitoring(@PathVariable String clientID, @PathVariable String url) {
+        Logger logger = Logger.getLogger("saveNewMonitoringUrl");
+        logger.info("delete url " + url + " at client " + clientID);
+        Message message = new Message();
+        Client client = new Client(clientID);
+        List<BaseEntity> monitoringList = MonitoringListHelper.readMonitoringList(client);
+        boolean result = false;
+        for (BaseEntity baseEntity : monitoringList) {
+            if (baseEntity instanceof MonitoringList) {
+                result = ((MonitoringList) baseEntity).getUrls().remove(url);
+                if (result)
+                    MonitoringListHelper.updateMonitoringList((MonitoringList) baseEntity, client);
+            }
+        }
+        if (result) {
+
+            logger.warning("successful deleting");
+            return new Message("SUCCESS", "URL удален");
+        } else {
+            logger.warning("deletion error");
+            return new Message("ERROR", "Ошибка удаления");
+        }
     }
 }
 
