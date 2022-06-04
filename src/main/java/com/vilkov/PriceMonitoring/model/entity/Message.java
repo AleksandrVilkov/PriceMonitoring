@@ -8,7 +8,7 @@ public class Message implements BaseEntity {
 
     public Message(Status status, String message) {
         this.status = status;
-        message = message;
+        this.message = message;
     }
 
     public void setStatus(Status status) {
