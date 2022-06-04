@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class MonitoringListHelper {
-    private static DataStorageInterface dataStorageInterface = new DataBaseAdapter();
+    private static final DataStorageInterface dataStorageInterface = new DataBaseAdapter();
     Logger logger = Logger.getLogger("MonitorListHelper");
 
     public static boolean createMonitoringList(MonitoringList monitoringList, Client client) {

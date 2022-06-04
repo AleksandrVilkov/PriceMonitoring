@@ -1,5 +1,6 @@
 package com.vilkov.PriceMonitoring.model;
 
+import com.vilkov.PriceMonitoring.dataBaseAdapter.DataBaseAdapter;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorageInterface;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
@@ -11,9 +12,9 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class ProductHelper {
-    private static Logger logger = Logger.getLogger("ProductHelper");
+    private static final Logger logger = Logger.getLogger("ProductHelper");
 
-    private static DataStorageInterface dataStorage;
+    private static final DataStorageInterface dataStorage = new DataBaseAdapter();
 
     public static void createProductToDataBase(Product product, Client client) {
         dataStorage.createEntity(product, client);

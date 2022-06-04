@@ -4,10 +4,7 @@ import com.vilkov.PriceMonitoring.model.MonitoringListHelper;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -16,8 +13,8 @@ import java.util.logging.Logger;
 @RequestMapping("api/monitoring")
 public class MonitoringUrlsController {
 
-    @GetMapping("/add/{clientID}/{url}")
-    public Message saveNewMonitoringUrl(@PathVariable String clientID, @PathVariable String url) {
+    @PostMapping("/add/{clientID}")
+    public Message saveNewMonitoringUrl(@PathVariable String clientID, @RequestParam("url") String url) {
         Logger logger = Logger.getLogger("saveNewMonitoringUrl");
         logger.info("get new url " + url + " for client " + clientID);
         Message message = new Message();

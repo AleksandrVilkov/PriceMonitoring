@@ -29,7 +29,6 @@ public class GlobusParser implements Parser {
         String name;
         try {
             Document document = Jsoup.connect(url).get();
-
             Element rubPriceElement = document.select("span.catalog-detail__item-price-actual-main")
                     .first();
             assert rubPriceElement != null;
