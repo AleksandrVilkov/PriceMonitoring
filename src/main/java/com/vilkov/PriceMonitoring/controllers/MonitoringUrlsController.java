@@ -75,5 +75,23 @@ public class MonitoringUrlsController {
             return new Message("ERROR", "Ошибка удаления");
         }
     }
+
+    @GetMapping("getAllURLs/{clientID}")
+    public MonitoringList getAllUrls(@PathVariable String clientID) {
+        Client client = new Client(clientID);
+        List<BaseEntity> baseEntityList = MonitoringListHelper.readMonitoringList(client);
+        MonitoringList result = new MonitoringList();
+        if (baseEntityList.isEmpty()) {
+            return null;
+        } else {
+            for (BaseEntity baseEntity: baseEntityList) {
+                if (baseEntity instanceof MonitoringList) {
+                    result.getUrls().addAll(((MonitoringList) baseEntity).getUrls());
+                }
+            }
+        }
+
+        return result;
+    }
 }
 
