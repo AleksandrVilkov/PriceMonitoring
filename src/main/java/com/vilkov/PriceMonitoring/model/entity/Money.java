@@ -33,6 +33,10 @@ public class Money implements BaseEntity {
         return this;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Money{" +

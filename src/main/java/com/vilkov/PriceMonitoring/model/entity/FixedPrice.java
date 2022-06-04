@@ -9,6 +9,17 @@ public class FixedPrice implements Comparable, BaseEntity {
     String type;
     String shop;
 
+    public FixedPrice() {
+        this.type = FixedPrice.class.toString();
+    }
+
+    public FixedPrice(Date date, Money price, String shop) {
+        this.date = date;
+        this.price = price;
+        this.type = FixedPrice.class.toString();
+        this.shop = shop;
+    }
+
     public String getShop() {
         return shop;
     }
@@ -34,6 +45,10 @@ public class FixedPrice implements Comparable, BaseEntity {
     public FixedPrice setPrice(Money price) {
         this.price = price;
         return this;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
