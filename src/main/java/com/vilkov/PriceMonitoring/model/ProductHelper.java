@@ -2,10 +2,7 @@ package com.vilkov.PriceMonitoring.model;
 
 import com.vilkov.PriceMonitoring.dataBaseAdapter.DataBaseAdapter;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorageInterface;
-import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
-import com.vilkov.PriceMonitoring.model.entity.Client;
-import com.vilkov.PriceMonitoring.model.entity.FixedPrice;
-import com.vilkov.PriceMonitoring.model.entity.Product;
+import com.vilkov.PriceMonitoring.model.entity.*;
 import com.vilkov.PriceMonitoring.model.parsers.ParserHelper;
 
 import java.util.*;
@@ -60,11 +57,17 @@ public class ProductHelper {
 
 
     public static void getAndSaveCurrentPricesOfProducts(Client client) {
-        Set<String> urls = ProductHelper.getAllProductUrlsFromDataBase(client);
+
+        List<BaseEntity> baseEntities = MonitoringListHelper.readMonitoringList(client);
         List<Product> result = new ArrayList<>();
 
-        for (String url : urls) {
-            result.add(ParserHelper.getProduct(url));
+        for (BaseEntity baseEntity : baseEntities) {
+            if (baseEntity instanceof MonitoringList) {
+                List<String> urls = ((MonitoringList) baseEntity).getUrls();
+                for (String url: urls) {
+                  result.add(ParserHelper.getProduct(url));
+                }
+            }
         }
 
         for (Product product : result) {

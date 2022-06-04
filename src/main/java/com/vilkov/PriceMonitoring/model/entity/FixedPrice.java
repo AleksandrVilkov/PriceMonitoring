@@ -6,7 +6,7 @@ import java.util.Objects;
 public class FixedPrice implements Comparable, BaseEntity {
     Date date;
     Money price;
-
+    String type;
     String shop;
 
     public String getShop() {
@@ -36,6 +36,10 @@ public class FixedPrice implements Comparable, BaseEntity {
         return this;
     }
 
+    @Override
+    public String getType() {
+        return type;
+    }
 
     @Override
     public boolean equals(Object o) {

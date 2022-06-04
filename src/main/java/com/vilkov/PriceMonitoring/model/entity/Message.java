@@ -5,10 +5,12 @@ import com.vilkov.PriceMonitoring.model.Status;
 public class Message implements BaseEntity {
     private Status status;
     private String message;
+    private String type;
 
     public Message(Status status, String message) {
         this.status = status;
         this.message = message;
+        this.type = Message.class.toString();
     }
 
     public void setStatus(Status status) {
@@ -25,5 +27,10 @@ public class Message implements BaseEntity {
 
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 }

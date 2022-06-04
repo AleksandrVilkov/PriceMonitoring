@@ -3,8 +3,16 @@ package com.vilkov.PriceMonitoring.model.entity;
 public class Money implements BaseEntity {
     private double amount;
     private Currency currency;
+    private String type;
 
     public Money() {
+        this.type = Money.class.toString();
+    }
+
+    public Money(double amount, Currency currency) {
+        this.amount = amount;
+        this.currency = currency;
+        this.type = Money.class.toString();
     }
 
     public double getAmount() {
@@ -31,5 +39,10 @@ public class Money implements BaseEntity {
                 "amount=" + amount +
                 ", currency=" + currency +
                 '}';
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 }

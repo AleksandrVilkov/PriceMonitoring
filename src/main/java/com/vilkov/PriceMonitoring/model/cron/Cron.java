@@ -19,7 +19,7 @@ public class Cron {
 
     Logger logger = Logger.getLogger("CRON");
 
-    @Scheduled(fixedRate = 1_000) //раз в минуту
+    @Scheduled(fixedRate = Config.FREQUENCY_DEMON_WORK)
     @Async
     public void getNewProducts() {
         List<Client> clients = ClientHelper.readClients();

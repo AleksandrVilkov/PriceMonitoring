@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static com.vilkov.PriceMonitoring.model.entity.Currency.RUB;
+import static com.vilkov.PriceMonitoring.model.entity.Currency.UNKNOWN;
+
 public class DataBaseHelper {
 
     static Logger logger = Logger.getLogger("DataBaseHelper");
@@ -40,8 +43,18 @@ public class DataBaseHelper {
                     "type", ((Client) baseEntity).getType()
             ));
         }
-
-
+        if (baseEntity instanceof Product) {
+            return new Document(Map.of(
+                    "url", ((Product) baseEntity).getUlr(),
+                    "id", ((Product) baseEntity).getId(),
+                    "name", ((Product) baseEntity).getName(),
+                    "amountPrice", ((Product) baseEntity).getPrice().getAmount(),
+                    "currencyPrice", ((Product) baseEntity).getPrice().getCurrency().name(),
+                    "shop", ((Product) baseEntity).getShop(),
+                    "date", ((Product) baseEntity).getDate(),
+                    "type", ((Product) baseEntity).getType()
+            ));
+        }
         return null;
     }
 
@@ -51,8 +64,8 @@ public class DataBaseHelper {
             String name = (String) document.get("name");
             double amountPrice = (double) document.get("amountPrice");
             Currency currency;
-            if (Currency.RUB.name().equals((String) document.get("currency"))) {
-                currency = Currency.RUB;
+            if (RUB.name().equals((String) document.get("currency"))) {
+                currency = RUB;
             } else {
                 currency = null;
             }
@@ -69,6 +82,21 @@ public class DataBaseHelper {
         if (document.get("type").equals(Client.class.toString())) {
             String id = (String) document.get("clientID");
             return new Client(id);
+        }
+
+        if (document.get("type").equals(Product.class.toString())) {
+            String url = (String) document.get("url");
+            String name = (String) document.get("name");
+            double amountPrice = (double) document.get("amountPrice");
+            Currency currency = null;
+            String currencyPrice = (String) document.get("currencyPrice");
+            currency = currencyPrice.equals(RUB.name()) ? RUB : UNKNOWN;
+            Money price = new Money(amountPrice, currency);
+            String shop = (String) document.get("shop");
+            Date date = (Date) document.get("date");
+            Message message = new Message(Status.SUCCESS, "Successfully retrieved from DB");
+            return new Product(name, price, shop, url,date,message);
+
         }
         return null;
     }
