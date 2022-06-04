@@ -2,7 +2,6 @@ package com.vilkov.PriceMonitoring.model.dataStorage;
 
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
-import com.vilkov.PriceMonitoring.model.entity.Product;
 
 import java.util.List;
 

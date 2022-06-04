@@ -11,7 +11,7 @@ public class Message {
     }
 
     public Message() {
-        this.messageText= "";
+        this.messageText = "";
     }
 
     public String getStatus() {

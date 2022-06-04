@@ -95,7 +95,7 @@ public class DataBaseHelper {
             String shop = (String) document.get("shop");
             Date date = (Date) document.get("date");
             Message message = new Message(Status.SUCCESS, "Successfully retrieved from DB");
-            return new Product(name, price, shop, url,date,message);
+            return new Product(name, price, shop, url, date, message);
 
         }
         return null;

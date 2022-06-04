@@ -22,7 +22,7 @@ public class MonitoringListHelper {
     }
 
     public static List<BaseEntity> readMonitoringList(Client client) {
-        return dataStorageInterface.readEntity(client,MonitoringList.class);
+        return dataStorageInterface.readEntity(client, MonitoringList.class);
     }
 
     public static boolean updateMonitoringList(MonitoringList monitoringList, Client client) {

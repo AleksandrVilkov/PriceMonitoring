@@ -64,8 +64,8 @@ public class ProductHelper {
         for (BaseEntity baseEntity : baseEntities) {
             if (baseEntity instanceof MonitoringList) {
                 List<String> urls = ((MonitoringList) baseEntity).getUrls();
-                for (String url: urls) {
-                  result.add(ParserHelper.getProduct(url));
+                for (String url : urls) {
+                    result.add(ParserHelper.getProduct(url));
                 }
             }
         }

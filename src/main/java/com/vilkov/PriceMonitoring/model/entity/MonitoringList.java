@@ -12,10 +12,12 @@ public class MonitoringList implements BaseEntity {
         this.urls = new ArrayList<>();
         this.type = MonitoringList.class.toString();
     }
+
     public MonitoringList(List<String> urls) {
         this.urls = urls;
         this.type = MonitoringList.class.toString();
     }
+
     public String getType() {
         return type;
     }
