@@ -16,6 +16,17 @@ import java.util.logging.Logger;
 
 public class DataBaseAdapter implements DataStorageInterface, ClientDataStorageInterface {
     private static final Logger logger = Logger.getLogger("DataBaseMonitoringListAdapter");
+    private static DataBaseAdapter instance;
+
+    private DataBaseAdapter() {
+    }
+
+    public static DataBaseAdapter getInstance() {
+        if (instance == null) {
+            instance = new DataBaseAdapter();
+        }
+        return instance;
+    }
 
     @Override
     public boolean createEntity(BaseEntity baseEntity, Client client) {

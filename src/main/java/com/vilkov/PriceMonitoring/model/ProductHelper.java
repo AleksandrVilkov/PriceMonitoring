@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class ProductHelper {
     private static final Logger logger = Logger.getLogger("ProductHelper");
 
-    private static final DataStorageInterface dataStorage = new DataBaseAdapter();
+    private static final DataStorageInterface dataStorage = DataBaseAdapter.getInstance();
 
     public static void createProductToDataBase(Product product, Client client) {
         dataStorage.createEntity(product, client);

@@ -20,7 +20,7 @@ public class DataBaseHelperTest {
         Product product2 = new Product("Трава желтая", money, "Рога и копыта", "www.lolkek.ru",
                 new Date(), new Message(Status.SUCCESS, "ОК"));
 
-        DataBaseAdapter dataBaseAdapter = new DataBaseAdapter();
+        DataBaseAdapter dataBaseAdapter = DataBaseAdapter.getInstance();
         Client client = new Client("testClient1");
         Client client2 = new Client("testClient2");
         Assert.assertEquals(dataBaseAdapter.createEntity(product, client), true);
@@ -42,7 +42,7 @@ public class DataBaseHelperTest {
 
     @Test
     public void readEntityTest() {
-        DataBaseAdapter dataBaseAdapter = new DataBaseAdapter();
+        DataBaseAdapter dataBaseAdapter = DataBaseAdapter.getInstance();
         Client client = new Client("testClient1");
         List<BaseEntity> baseEntities = dataBaseAdapter.readEntity(client, Product.class);
         List<BaseEntity> baseEntities1 = dataBaseAdapter.readEntity(client, MonitoringList.class);
@@ -52,7 +52,7 @@ public class DataBaseHelperTest {
 
     @Test
     public void deleteTest() {
-        DataBaseAdapter dataBaseAdapter = new DataBaseAdapter();
+        DataBaseAdapter dataBaseAdapter = DataBaseAdapter.getInstance();
         Client client = new Client("testClient1");
         Client client2 = new Client("testClient2");
         Assert.assertEquals(dataBaseAdapter.deleteEntity(client, Product.class), true);
