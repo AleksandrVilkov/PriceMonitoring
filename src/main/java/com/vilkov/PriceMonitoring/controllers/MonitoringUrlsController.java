@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 @RequestMapping("api/monitoring")
 public class MonitoringUrlsController {
 
-
     @GetMapping("/add/{clientID}/{url}")
     public Message saveNewMonitoringUrl(@PathVariable String clientID, @PathVariable String url) {
         Logger logger = Logger.getLogger("saveNewMonitoringUrl");
@@ -84,7 +83,7 @@ public class MonitoringUrlsController {
         if (baseEntityList.isEmpty()) {
             return null;
         } else {
-            for (BaseEntity baseEntity: baseEntityList) {
+            for (BaseEntity baseEntity : baseEntityList) {
                 if (baseEntity instanceof MonitoringList) {
                     result.getUrls().addAll(((MonitoringList) baseEntity).getUrls());
                 }
