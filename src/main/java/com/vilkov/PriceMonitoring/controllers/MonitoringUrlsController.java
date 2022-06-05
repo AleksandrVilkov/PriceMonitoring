@@ -6,6 +6,7 @@ import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -13,8 +14,11 @@ import java.util.logging.Logger;
 @RequestMapping("api/monitoring")
 public class MonitoringUrlsController {
 
+    //TODO добавить проверку на корректность url перед сохранением
     @PostMapping("/add/{clientID}")
     public Message saveNewMonitoringUrl(@PathVariable String clientID, @RequestParam("url") String url) {
+
+
         Logger logger = Logger.getLogger("saveNewMonitoringUrl");
         logger.info("get new url " + url + " for client " + clientID);
         Message message = new Message();
@@ -76,16 +80,16 @@ public class MonitoringUrlsController {
     }
 
     @GetMapping("getAllURLs/{clientID}")
-    public MonitoringList getAllUrls(@PathVariable String clientID) {
+    public List<String> getAllUrls(@PathVariable String clientID) {
         Client client = new Client(clientID);
         List<BaseEntity> baseEntityList = MonitoringListHelper.readMonitoringList(client);
-        MonitoringList result = new MonitoringList();
+        List<String> result = new ArrayList<>();
         if (baseEntityList.isEmpty()) {
             return null;
         } else {
             for (BaseEntity baseEntity : baseEntityList) {
                 if (baseEntity instanceof MonitoringList) {
-                    result.getUrls().addAll(((MonitoringList) baseEntity).getUrls());
+                    result.addAll(((MonitoringList) baseEntity).getUrls());
                 }
             }
         }
