@@ -22,17 +22,19 @@ public class MVideoParser implements Parser {
         if (!url.contains("www.mvideo.ru")) {
             logger.warning("url doesn't apply to www.mvideo.ru");
             return new Product(null, null, null, null, new Date(),
-                    new Message(Status.ERROR, "url doesn't apply to www.globus.ru"));
+                    new Message(Status.ERROR, "url doesn't apply to www.mvideo.ru"));
         }
 
         Money priceMVideoProduct = new Money();
         String nameTmp;
         try {
-            Document document = Jsoup.connect(url).get();
+            Document document = Jsoup.connect(url)
+                    .userAgent("Chrome")
+                    .cookie("beget", "begetok")
+                    .get();
             Element rubPriceElement = document.select("span.price__main-value")
                     .first();
             assert rubPriceElement != null;
-
             TextNode rubTextNode = (TextNode) rubPriceElement.childNodes().get(0);
             String rub = rubTextNode.getWholeText();
 
@@ -41,7 +43,7 @@ public class MVideoParser implements Parser {
             String pennies = penniesTextNode.getWholeText();
             priceMVideoProduct.setAmount(Double.parseDouble(rub + "." + pennies)).setCurrency(Currency.RUB);
 
-            nameTmp = document.title().replace(" | Магазин бытовой техники \"МВидео\"", "");
+            nameTmp = document.title().replace(" | Магазин бытовой техники \"Глобус\"", "");
 
         } catch (IOException e) {
             logger.warning(e.getMessage());
