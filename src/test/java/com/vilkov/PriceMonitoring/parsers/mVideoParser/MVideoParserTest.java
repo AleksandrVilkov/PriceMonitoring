@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.parsers;
+package com.vilkov.PriceMonitoring.parsers.mVideoParser;
 
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Product;
