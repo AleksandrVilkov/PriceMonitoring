@@ -1,5 +1,6 @@
 package com.vilkov.PriceMonitoring.controllers;
 
+import com.vilkov.PriceMonitoring.controllers.entity.Message;
 import com.vilkov.PriceMonitoring.model.MonitoringListHelper;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;

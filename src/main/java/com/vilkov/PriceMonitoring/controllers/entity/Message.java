@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.controllers;
+package com.vilkov.PriceMonitoring.controllers.entity;
 
 
 public class Message {
