@@ -18,4 +18,11 @@ public class ControllerHelperTest {
         Assert.assertEquals(date.getDate(), 21);
         Assert.assertEquals(date.getMonth(), 5);
     }
+
+    @Test
+    public void isCorrectUrlTest() {
+        Assert.assertEquals(ControllerHelper.isCorrectUrl("https://www.globus.ru/products/93301499_ST/"), true);
+        Assert.assertEquals(ControllerHelper.isCorrectUrl("https:////ww.globus.ru/products/93301499_ST/"), false);
+        Assert.assertEquals(ControllerHelper.isCorrectUrl("https/://www.globus.ru/products/93301499_ST/"), false);
+    }
 }

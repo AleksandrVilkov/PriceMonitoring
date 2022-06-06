@@ -13,11 +13,11 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("api/monitoring")
 public class MonitoringUrlsController {
-
-    //TODO добавить проверку на корректность url перед сохранением
     @PostMapping("/add/{clientID}")
     public Message saveNewMonitoringUrl(@PathVariable String clientID, @RequestParam("url") String url) {
 
+        if (!ControllerHelper.isCorrectUrl(url))
+            return new Message("ERROR", "Прислан не корректный url");
 
         Logger logger = Logger.getLogger("saveNewMonitoringUrl");
         logger.info("get new url " + url + " for client " + clientID);

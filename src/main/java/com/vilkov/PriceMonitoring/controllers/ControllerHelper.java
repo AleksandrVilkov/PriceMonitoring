@@ -8,9 +8,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class ControllerHelper {
     private static final Logger logger = Logger.getLogger(ControllerHelper.class.toString());
+
+
+    public static boolean isCorrectUrl(String url) {
+        String reg = "^((ftp|http|https):\\/\\/)?(www\\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9\\-]*\\.?)*\\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\\/([\\w#!:.?+=&%@!\\-\\/])*)?";
+        Pattern pattern = Pattern.compile(reg);
+        return pattern.matcher(url).find();
+    }
 
     public static Date getDateFromString(String stringDate) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
