@@ -8,12 +8,15 @@ import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
 import com.vilkov.PriceMonitoring.model.entity.Product;
 import org.bson.Document;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 
+
+@Component
 public class DataBaseAdapter implements DataStorageInterface, ClientDataStorageInterface {
     private static final Logger logger = Logger.getLogger("DataBaseMonitoringListAdapter");
     private static DataBaseAdapter instance;

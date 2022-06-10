@@ -1,9 +1,9 @@
 package com.vilkov.PriceMonitoring.model;
 
-import com.vilkov.PriceMonitoring.dataBaseAdapter.DataBaseAdapter;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorageInterface;
 import com.vilkov.PriceMonitoring.model.entity.*;
 import com.vilkov.PriceMonitoring.model.parsers.ParserHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 public class ProductHelper {
     private static final Logger logger = Logger.getLogger("ProductHelper");
 
-    private static final DataStorageInterface dataStorage = DataBaseAdapter.getInstance();
+    @Autowired
+    private static DataStorageInterface dataStorage;
 
     public static void createProductToDataBase(Product product, Client client) {
         dataStorage.createEntity(product, client);
