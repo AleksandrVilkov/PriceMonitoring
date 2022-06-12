@@ -1,16 +1,16 @@
 package com.vilkov.PriceMonitoring.controllers.entity;
 
 
-public class Message {
+public class MessageVO {
     private String status;
     private String messageText;
 
-    public Message(String status, String messageText) {
+    public MessageVO(String status, String messageText) {
         this.status = status;
         this.messageText = messageText;
     }
 
-    public Message() {
+    public MessageVO() {
         this.messageText = "";
     }
 

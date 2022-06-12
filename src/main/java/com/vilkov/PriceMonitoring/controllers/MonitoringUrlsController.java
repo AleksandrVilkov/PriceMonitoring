@@ -1,10 +1,11 @@
 package com.vilkov.PriceMonitoring.controllers;
 
-import com.vilkov.PriceMonitoring.controllers.entity.Message;
+import com.vilkov.PriceMonitoring.controllers.entity.MessageVO;
 import com.vilkov.PriceMonitoring.model.MonitoringListHelper;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,14 +16,14 @@ import java.util.logging.Logger;
 @RequestMapping("api/monitoring")
 public class MonitoringUrlsController {
     @PostMapping("/add/{clientID}")
-    public Message saveNewMonitoringUrl(@PathVariable String clientID, @RequestParam("url") String url) {
+    public MessageVO saveNewMonitoringUrl(@PathVariable String clientID, @RequestParam("url") String url) {
 
         if (!ControllerHelper.isCorrectUrl(url))
-            return new Message("ERROR", "Прислан не корректный url");
+            return new MessageVO("ERROR", "Прислан не корректный url");
 
         Logger logger = Logger.getLogger("saveNewMonitoringUrl");
         logger.info("get new url " + url + " for client " + clientID);
-        Message message = new Message();
+        MessageVO message = new MessageVO();
         Client client = new Client(clientID);
         List<BaseEntity> monitoringList = MonitoringListHelper.readMonitoringList(client);
 
@@ -56,10 +57,10 @@ public class MonitoringUrlsController {
     }
 
     @GetMapping("/delete/{clientID}/{url}")
-    public Message deleteUrlFromMonitoring(@PathVariable String clientID, @PathVariable String url) {
+    public MessageVO deleteUrlFromMonitoring(@PathVariable String clientID, @PathVariable String url) {
         Logger logger = Logger.getLogger("saveNewMonitoringUrl");
         logger.info("delete url " + url + " at client " + clientID);
-        Message message = new Message();
+        MessageVO message = new MessageVO();
         Client client = new Client(clientID);
         List<BaseEntity> monitoringList = MonitoringListHelper.readMonitoringList(client);
         boolean result = false;
@@ -73,10 +74,10 @@ public class MonitoringUrlsController {
         if (result) {
 
             logger.warning("successful deleting");
-            return new Message("SUCCESS", "URL удален");
+            return new MessageVO("SUCCESS", "URL удален");
         } else {
             logger.warning("deletion error");
-            return new Message("ERROR", "Ошибка удаления");
+            return new MessageVO("ERROR", "Ошибка удаления");
         }
     }
 
