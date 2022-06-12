@@ -1,6 +1,9 @@
 package com.vilkov.PriceMonitoring.controllers;
 
 
+
+import com.vilkov.PriceMonitoring.controllers.entity.EntityHelper;
+import com.vilkov.PriceMonitoring.controllers.entity.ProductVO;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
@@ -21,34 +24,31 @@ public class ProductController {
     DataStorage dataStorage;
 
     @GetMapping("/getAllProduct/{clientID}")
-    public List<Product> getAllClientProducts(@PathVariable String clientID) {
-        Client client = new Client(clientID);
-
-        List<BaseEntity> baseEntityList = dataStorage.readEntities(client, Product.class);
-        List<Product> result = new ArrayList<>();
+    public List<ProductVO> getAllClientProducts(@PathVariable String clientID) {
+        List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID), Product.class);
+        List<ProductVO> result = new ArrayList<>();
         for (BaseEntity baseEntity : baseEntityList) {
             if (baseEntity instanceof Product) {
-                result.add((Product) baseEntity);
+                result.add(EntityHelper.convertProductToProductVO((Product) baseEntity));
             }
         }
         return result;
-
     }
 
     @PostMapping("/getAllProductFromDate/{clientID}")
-    public List<Product> getClientProductsFromPeriod(@PathVariable String clientID, @RequestParam("startDay") String startDay, @RequestParam("endDay") String endDay) {
+    public List<ProductVO> getClientProductsFromPeriod(@PathVariable String clientID, @RequestParam("startDay") String startDay, @RequestParam("endDay") String endDay) {
         Date startDate = ControllerHelper.getDateFromString(startDay);
         Date endDate = ControllerHelper.getDateFromString(endDay);
         endDate.setHours(23);
         endDate.setMinutes(59);
         endDate.setSeconds(59);
         List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID), Product.class);
-        List<Product> products = new ArrayList<>();
+        List<ProductVO> products = new ArrayList<>();
         for (BaseEntity baseEntity : baseEntityList) {
             if (baseEntity instanceof Product) {
                 Date productDate = ((Product) baseEntity).getDate();
                 if (!productDate.before(startDate) && !productDate.after(endDate))
-                    products.add((Product) baseEntity);
+                    products.add(EntityHelper.convertProductToProductVO((Product) baseEntity));
             }
         }
 
@@ -57,14 +57,14 @@ public class ProductController {
 
 
     @PostMapping("/getAllProductFromShop/{clientID}")
-    public List<Product> getClientProductsFromShops(@RequestParam("shop") String shop, @PathVariable String clientID) {
+    public List<ProductVO> getClientProductsFromShops(@RequestParam("shop") String shop, @PathVariable String clientID) {
         List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID), Product.class);
-        List<Product> products = new ArrayList<>();
+        List<ProductVO> products = new ArrayList<>();
         for (BaseEntity baseEntity : baseEntityList) {
             if (baseEntity instanceof Product) {
                 String productShop = ((Product) baseEntity).getShop();
                 if (productShop.equalsIgnoreCase(shop)) {
-                    products.add((Product) baseEntity);
+                    products.add(EntityHelper.convertProductToProductVO((Product) baseEntity));
                 }
             }
         }
