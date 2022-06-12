@@ -1,8 +1,8 @@
 package com.vilkov.PriceMonitoring.model.entity;
 
 public class Client implements BaseEntity {
-    private String clientID;
-    private String type;
+    private final String clientID;
+    private final String type;
 
     public Client(String clientID) {
         this.clientID = clientID;

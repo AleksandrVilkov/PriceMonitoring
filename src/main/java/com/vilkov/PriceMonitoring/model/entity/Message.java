@@ -5,7 +5,7 @@ import com.vilkov.PriceMonitoring.model.Status;
 public class Message implements BaseEntity {
     private Status status;
     private String message;
-    private String type;
+    private final String type;
 
     public Message(Status status, String message) {
         this.status = status;

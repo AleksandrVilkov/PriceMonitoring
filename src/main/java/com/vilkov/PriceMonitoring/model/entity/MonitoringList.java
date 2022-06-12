@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MonitoringList implements BaseEntity {
     private List<String> urls;
-    private String type;
+    private final String type;
 
 
     public MonitoringList() {

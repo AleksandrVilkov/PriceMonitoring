@@ -18,18 +18,6 @@ public class DataBaseHelper {
 
 
     public static Document toDoc(BaseEntity baseEntity) {
-        if (baseEntity instanceof Product) {
-            return new Document(Map.of(
-                    "_id", ((Product) baseEntity).getId(),
-                    "url", ((Product) baseEntity).getUlr(),
-                    "name", ((Product) baseEntity).getName(),
-                    "amountPrice", ((Product) baseEntity).getPrice().getAmount(),
-                    "currency", ((Product) baseEntity).getPrice().getCurrency().toString(),
-                    "shop", ((Product) baseEntity).getShop(),
-                    "date", ((Product) baseEntity).getDate(),
-                    "type", ((Product) baseEntity).getType()
-            ));
-        }
         if (baseEntity instanceof MonitoringList) {
             return new Document(Map.of(
                     "urls", ((MonitoringList) baseEntity).getUrls(),

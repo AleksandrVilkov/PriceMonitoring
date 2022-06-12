@@ -1,7 +1,6 @@
 package com.vilkov.PriceMonitoring.dataBaseAdapter;
 
 import com.mongodb.client.*;
-import com.vilkov.PriceMonitoring.model.dataStorage.ClientDataStorageInterface;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorageInterface;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
@@ -12,24 +11,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-
-
 
 @Component
-public class DataBaseAdapter implements DataStorageInterface, ClientDataStorageInterface {
-    private static final Logger logger = Logger.getLogger("DataBaseMonitoringListAdapter");
-    private static DataBaseAdapter instance;
+public class DataBaseAdapter implements DataStorageInterface {
 
-    private DataBaseAdapter() {
-    }
-
-    public static DataBaseAdapter getInstance() {
-        if (instance == null) {
-            instance = new DataBaseAdapter();
-        }
-        return instance;
-    }
 
     @Override
     public boolean createEntity(BaseEntity baseEntity, Client client) {
@@ -37,19 +22,17 @@ public class DataBaseAdapter implements DataStorageInterface, ClientDataStorageI
             MongoDatabase mongoDatabase = mongoClient.getDatabase(client.getClientID());
             MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(baseEntity.getClass().toString());
             if (baseEntity instanceof MonitoringList) {
-                deleteEntity(client, MonitoringList.class);
+                deleteEntity(client, MonitoringList.class, null);
             }
             mongoCollection.insertOne(DataBaseHelper.toDoc(baseEntity));
             return true;
         } catch (Exception e) {
-            logger.warning("Неудачная попытка добавления объекта в базу данных: " + e.getMessage());
             return false;
         }
     }
 
-
     @Override
-    public List<BaseEntity> readEntity(Client client, Class cls) {
+    public List<BaseEntity> readEntities(Client client, Class cls) {
         List<BaseEntity> result = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create()) {
             MongoDatabase database = mongoClient.getDatabase(client.getClientID());
@@ -61,7 +44,6 @@ public class DataBaseAdapter implements DataStorageInterface, ClientDataStorageI
             }
             return result;
         } catch (Exception e) {
-            logger.warning("Ошибка чтения: " + e.getMessage());
             return null;
         }
     }
@@ -72,22 +54,22 @@ public class DataBaseAdapter implements DataStorageInterface, ClientDataStorageI
             return false;
 
         if (baseEntity instanceof MonitoringList) {
-            deleteEntity(client, MonitoringList.class);
+            deleteEntity(client, MonitoringList.class, null);
             createEntity(baseEntity, client);
             return true;
         }
         return false;
     }
 
+
     @Override
-    public boolean deleteEntity(Client client, Class cls) {
+    public boolean deleteEntity(Client client, Class cls,  String id) {
         try (MongoClient mongoClient = MongoClients.create()) {
             MongoDatabase database = mongoClient.getDatabase(client.getClientID());
             MongoCollection<Document> collection = database.getCollection(cls.toString());
             collection.drop();
             return true;
         } catch (Exception e) {
-            logger.warning("Не удалось удалить коллекцию" + e.getMessage());
             return false;
         }
     }
