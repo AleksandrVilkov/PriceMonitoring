@@ -15,8 +15,37 @@ public class ProductHelper {
 @Autowired
 DataStorage dataStorage;
 
+    public Map<String, TreeSet<FixedPrice>> getSortedPrices(String clientID) {
+
+        List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID), Product.class);
+        List<Product> products = new ArrayList<>();
+        for (BaseEntity baseEntity : baseEntityList) {
+            if (baseEntity instanceof Product) {
+                products.add((Product) baseEntity);
+            }
+        }
+        Map<String, TreeSet<FixedPrice>> result = new HashMap<>();
+        if (!products.isEmpty()) {
+            for (Product product : products) {
+                String name = product.getName().toLowerCase(Locale.ROOT);
+                FixedPrice fixedPrice = new FixedPrice()
+                        .setPrice(product.getPrice())
+                        .setDate(product.getDate())
+                        .setShop(product.getShop());
+                if (result.containsKey(name)) {
+                    result.get(name).add(fixedPrice);
+                } else {
+                    TreeSet<FixedPrice> fixedPrices = new TreeSet<>();
+                    fixedPrices.add(fixedPrice);
+                    result.put(name, fixedPrices);
+                }
+            }
+        }
+
+        return result;
+    }
     public void getAndSaveCurrentPricesOfProducts(Client client) {
-        List<BaseEntity> baseEntities = dataStorage.readEntities(client, Product.class);
+        List<BaseEntity> baseEntities = dataStorage.readEntities(client, MonitoringList.class);
         List<Product> result = new ArrayList<>();
         for (BaseEntity baseEntity : baseEntities) {
             if (baseEntity instanceof MonitoringList) {
