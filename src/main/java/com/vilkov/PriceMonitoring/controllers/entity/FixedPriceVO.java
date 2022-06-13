@@ -1,9 +1,5 @@
 package com.vilkov.PriceMonitoring.controllers.entity;
 
-import com.vilkov.PriceMonitoring.model.entity.FixedPrice;
-import com.vilkov.PriceMonitoring.model.entity.Money;
-
-import java.util.Date;
 import java.util.Objects;
 
 public class FixedPriceVO implements Comparable {
