@@ -2,7 +2,7 @@ package com.vilkov.PriceMonitoring.model;
 
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.*;
-import com.vilkov.PriceMonitoring.model.parsers.HTMLPageParser;
+import com.vilkov.PriceMonitoring.model.parser.HTMLPageParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.model.parsers;
+package com.vilkov.PriceMonitoring.model.parser;
 
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Currency;
