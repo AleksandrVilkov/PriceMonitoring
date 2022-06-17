@@ -24,12 +24,12 @@ public class HTMLPageParserTest {
         Assert.assertEquals(globusProduct.getPrice().getCurrency(), Currency.RUB);
         Assert.assertEquals(globusProduct.getMessage().getStatus(), Status.SUCCESS);
 
-//        URL = "https://www.citilink.ru/product/smartfon-huawei-y5p-32gb-chernyi-3g-4g-5-45-and10hms-wifi-gps-1380431/";
-//        Product citilinkProduct = HTMLPageParser.searchProduct(URL);
-//        Assert.assertNotNull(citilinkProduct);
-//        Assert.assertNotNull(citilinkProduct.getPrice());
-//        Assert.assertEquals(citilinkProduct.getPrice().getCurrency(), Currency.RUB);
-//        Assert.assertEquals(citilinkProduct.getMessage().getStatus(), Status.SUCCESS);
+        URL = "https://www.citilink.ru/product/smartfon-huawei-y5p-32gb-chernyi-3g-4g-5-45-and10hms-wifi-gps-1380431/";
+        Product citilinkProduct = HTMLPageParser.searchProduct(URL);
+        Assert.assertNotNull(citilinkProduct);
+        Assert.assertNotNull(citilinkProduct.getPrice());
+        Assert.assertEquals(citilinkProduct.getPrice().getCurrency(), Currency.RUB);
+        Assert.assertEquals(citilinkProduct.getMessage().getStatus(), Status.SUCCESS);
 
 
     }

@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import java.util.logging.Logger;
 
 public class HTMLPageParser {
@@ -43,17 +42,18 @@ public class HTMLPageParser {
             extraItemsPrice.add(" ");
             return getProduct(url, cssQuery, extraItemsName, extraItemsPrice, PEREKRESTOK);
 
-        }
-//        else if (url.contains(CITILINK)) {
-//            cssQuery = "span.ProductHeader__price-default_current-price js--ProductHeader__price-default_current-price ";
-//            extraItemsName = new ArrayList<>();
-//            extraItemsName.add("- купить в Ситилинк | ");
-//            extraItemsPrice = new ArrayList<>();
-//            extraItemsPrice.add("\n");
-//            extraItemsPrice.add(" ");
-//            return getProduct(url, cssQuery, extraItemsName, extraItemsPrice, CITILINK);
-//        }
-        else {
+        } else if (url.contains(CITILINK)) {
+            //id товара находится в конце url
+            String[] urlChunk = url.replace("/", "").split("-");
+            cssQuery = "#product-item-" + urlChunk[urlChunk.length - 1] + " > div.ProductCardLayout__product-description > div.ProductHeader.js--ProductHeader > div.ProductHeader__price-block > div.ProductHeader__price > div.ProductHeader__price-bonus > div > span > span.ProductHeader__price-default_current-price.js--ProductHeader__price-default_current-price";
+            extraItemsName = new ArrayList<>();
+            extraItemsName.add("- купить в Ситилинк | ");
+            extraItemsName.add(urlChunk[urlChunk.length - 1]);
+            extraItemsPrice = new ArrayList<>();
+            extraItemsPrice.add("\n");
+            extraItemsPrice.add(" ");
+            return getProduct(url, cssQuery, extraItemsName, extraItemsPrice, CITILINK);
+        } else {
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class HTMLPageParser {
             }
             if (rub.contains(",")) {
                 String[] part = rub.split(",");
-                String pens = "0."+part[1];
+                String pens = "0." + part[1];
                 price.setAmount(Double.parseDouble(part[0]) + Double.parseDouble(pens));
                 price.setCurrency(Currency.RUB);
             } else {
