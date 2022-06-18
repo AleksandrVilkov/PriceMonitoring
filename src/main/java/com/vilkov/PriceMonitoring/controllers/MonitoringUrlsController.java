@@ -1,107 +1,37 @@
 package com.vilkov.PriceMonitoring.controllers;
 
+import com.vilkov.PriceMonitoring.controllers.entity.EntityHelper;
 import com.vilkov.PriceMonitoring.controllers.entity.MessageVO;
-import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
-import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
-import com.vilkov.PriceMonitoring.model.entity.Client;
-import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
+import com.vilkov.PriceMonitoring.model.MonitoringListHelper;
+import com.vilkov.PriceMonitoring.model.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Component
 @RestController
 @RequestMapping("api/monitoring")
 public class MonitoringUrlsController {
     @Autowired
-    DataStorage dataStorage;
+    MonitoringListHelper monitoringListHelper;
 
     @PostMapping("/add/{clientID}")
     public MessageVO saveNewMonitoringUrl(@PathVariable String clientID, @RequestParam("url") String url) {
-
-        if (!ControllerHelper.isCorrectUrl(url))
-            return new MessageVO("ERROR", "Прислан не корректный url");
-
-        Logger logger = Logger.getLogger("saveNewMonitoringUrl");
-        logger.info("get new url " + url + " for client " + clientID);
-        MessageVO message = new MessageVO();
-        Client client = new Client(clientID);
-        List<BaseEntity> monitoringList = dataStorage.readEntities(client, MonitoringList.class);
-
-        MonitoringList result = new MonitoringList();
-
-        for (BaseEntity entity : monitoringList) {
-            if (entity instanceof MonitoringList && !monitoringList.isEmpty()) {
-                result.setUrl(((MonitoringList) entity).getUrls());
-            }
-        }
-        if (result.getUrls().contains(url)) {
-            message.setStatus("SUCCESS");
-            message.setMessageText(message.getMessageText() + "Url не добавлен, потому что уже существует");
-            logger.warning("url already exists");
-            return message;
-        } else {
-            result.getUrls().add(url);
-            logger.info("url added to client " + clientID);
-        }
-
-        if (dataStorage.updateEntity(result, client)) {
-            message.setStatus("SUCCESS");
-            message.setMessageText("Url добавлен");
-            return message;
-        } else {
-            message.setStatus("ERROR");
-            message.setMessageText("Ошибка выполнения");
-            logger.warning("runtime error");
-        }
-        return message;
+        Message message = monitoringListHelper.saveNewMonitoringUrl(clientID, url);
+        return EntityHelper.convertMessageToMessageVO(message);
     }
 
     @GetMapping("/delete/{clientID}/{url}")
     public MessageVO deleteUrlFromMonitoring(@PathVariable String clientID, @PathVariable String url) {
-        Logger logger = Logger.getLogger("saveNewMonitoringUrl");
-        logger.info("delete url " + url + " at client " + clientID);
-        MessageVO message = new MessageVO();
-        Client client = new Client(clientID);
-        List<BaseEntity> monitoringList = dataStorage.readEntities(client, MonitoringList.class);
-        boolean result = false;
-        for (BaseEntity baseEntity : monitoringList) {
-            if (baseEntity instanceof MonitoringList) {
-                result = ((MonitoringList) baseEntity).getUrls().remove(url);
-                if (result)
-                    dataStorage.updateEntity(baseEntity, client);
-            }
-        }
-        if (result) {
-
-            logger.warning("successful deleting");
-            return new MessageVO("SUCCESS", "URL удален");
-        } else {
-            logger.warning("deletion error");
-            return new MessageVO("ERROR", "Ошибка удаления");
-        }
+        Message message = monitoringListHelper.deleteUrlFromMonitoring(clientID, url);
+        return EntityHelper.convertMessageToMessageVO(message);
     }
 
     @GetMapping("getAllURLs/{clientID}")
     public List<String> getAllUrls(@PathVariable String clientID) {
-        Client client = new Client(clientID);
-        List<BaseEntity> baseEntityList = dataStorage.readEntities(client, MonitoringList.class);
-        List<String> result = new ArrayList<>();
-        if (baseEntityList.isEmpty()) {
-            return null;
-        } else {
-            for (BaseEntity baseEntity : baseEntityList) {
-                if (baseEntity instanceof MonitoringList) {
-                    result.addAll(((MonitoringList) baseEntity).getUrls());
-                }
-            }
-        }
-
-        return result;
+        return monitoringListHelper.getAllUrls(clientID);
     }
 }
 

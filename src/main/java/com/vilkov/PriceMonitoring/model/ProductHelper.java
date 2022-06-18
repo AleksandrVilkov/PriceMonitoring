@@ -1,5 +1,6 @@
 package com.vilkov.PriceMonitoring.model;
 
+import com.vilkov.PriceMonitoring.controllers.ControllerHelper;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.*;
 import com.vilkov.PriceMonitoring.model.parser.HTMLPageParser;
@@ -10,12 +11,53 @@ import java.util.*;
 
 @Component
 public class ProductHelper {
-@Autowired
-DataStorage dataStorage;
+    @Autowired
+    DataStorage dataStorage;
+
+
+    public List<Product> getClientProductsFromShops(String shop, String clientID) {
+        List<Product> productList = getAllClientProducts(clientID);
+        List<Product> result = new ArrayList<>();
+        for (Product product : productList) {
+            if (product.getShop().equalsIgnoreCase(shop)) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+
+    public List<Product> getClientProductsFromPeriod(String clientID, String startDay, String endDay) {
+        Date startDate = ControllerHelper.getDateFromString(startDay);
+        Date endDate = ControllerHelper.getDateFromString(endDay);
+        endDate.setHours(23);
+        endDate.setMinutes(59);
+        endDate.setSeconds(59);
+        List<Product> allProducts = getAllClientProducts(clientID);
+        List<Product> result = new ArrayList<>();
+        for (Product product : allProducts) {
+            Date productDate = product.getDate();
+            if (!productDate.before(startDate) && !productDate.after(endDate)) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+
+    public List<Product> getAllClientProducts(String clientID) {
+        List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID, null), Product.class);
+        List<Product> result = new ArrayList<>();
+        for (BaseEntity baseEntity : baseEntityList) {
+            if (baseEntity instanceof Product) {
+                result.add((Product) baseEntity);
+            }
+        }
+        return result;
+    }
+
 
     public Map<String, TreeSet<FixedPrice>> getSortedPrices(String clientID) {
 
-        List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID), Product.class);
+        List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID, null), Product.class);
         List<Product> products = new ArrayList<>();
         for (BaseEntity baseEntity : baseEntityList) {
             if (baseEntity instanceof Product) {
@@ -42,6 +84,7 @@ DataStorage dataStorage;
 
         return result;
     }
+
     public void getAndSaveCurrentPricesOfProducts(Client client) {
         List<BaseEntity> baseEntities = dataStorage.readEntities(client, MonitoringList.class);
         List<Product> result = new ArrayList<>();

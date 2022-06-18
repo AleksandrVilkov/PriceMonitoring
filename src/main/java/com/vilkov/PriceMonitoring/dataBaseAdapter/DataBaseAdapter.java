@@ -50,8 +50,7 @@ public class DataBaseAdapter implements DataStorageInterface {
 
     @Override
     public boolean updateEntity(BaseEntity baseEntity, Client client) {
-        if (baseEntity instanceof Product)
-            return false;
+        if (baseEntity instanceof Product) return false;
 
         if (baseEntity instanceof MonitoringList) {
             deleteEntity(client, MonitoringList.class, null);
@@ -63,7 +62,7 @@ public class DataBaseAdapter implements DataStorageInterface {
 
 
     @Override
-    public boolean deleteEntity(Client client, Class cls,  String id) {
+    public boolean deleteEntity(Client client, Class cls, String id) {
         try (MongoClient mongoClient = MongoClients.create()) {
             MongoDatabase database = mongoClient.getDatabase(client.getClientID());
             MongoCollection<Document> collection = database.getCollection(cls.toString());
@@ -79,7 +78,7 @@ public class DataBaseAdapter implements DataStorageInterface {
             MongoIterable<String> allNames = mongoClient.listDatabaseNames();
             List<Client> clients = new ArrayList<>();
             for (String name : allNames) {
-                clients.add(new Client(name));
+                clients.add(new Client(name, null));
             }
             return clients;
         }

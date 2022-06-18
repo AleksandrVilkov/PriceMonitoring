@@ -7,6 +7,10 @@ public class Message implements BaseEntity {
     private String message;
     private final String type;
 
+    public Message() {
+        this.type = Message.class.toString();
+    }
+
     public Message(Status status, String message) {
         this.status = status;
         this.message = message;

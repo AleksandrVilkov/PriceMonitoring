@@ -69,7 +69,7 @@ public class DataBaseHelper {
         }
         if (document.get("type").equals(Client.class.toString())) {
             String id = (String) document.get("clientID");
-            return new Client(id);
+            return new Client(id, null);
         }
 
         if (document.get("type").equals(Product.class.toString())) {
