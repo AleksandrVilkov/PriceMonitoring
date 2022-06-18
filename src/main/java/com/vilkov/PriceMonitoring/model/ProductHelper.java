@@ -1,12 +1,13 @@
 package com.vilkov.PriceMonitoring.model;
 
-import com.vilkov.PriceMonitoring.controllers.ControllerHelper;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.*;
 import com.vilkov.PriceMonitoring.model.parser.HTMLPageParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
@@ -27,8 +28,8 @@ public class ProductHelper {
     }
 
     public List<Product> getClientProductsFromPeriod(Client client, String startDay, String endDay) {
-        Date startDate = ControllerHelper.getDateFromString(startDay);
-        Date endDate = ControllerHelper.getDateFromString(endDay);
+        Date startDate = getDateFromString(startDay);
+        Date endDate = getDateFromString(endDay);
         endDate.setHours(23);
         endDate.setMinutes(59);
         endDate.setSeconds(59);
@@ -100,6 +101,14 @@ public class ProductHelper {
         for (Product product : result) {
             if (product != null && product.getMessage().getStatus().equals(Status.SUCCESS))
                 dataStorage.createEntity(product, client);
+        }
+    }
+    public static Date getDateFromString(String stringDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            return dateFormat.parse(stringDate);
+        } catch (ParseException e) {
+            return null;
         }
     }
 }
