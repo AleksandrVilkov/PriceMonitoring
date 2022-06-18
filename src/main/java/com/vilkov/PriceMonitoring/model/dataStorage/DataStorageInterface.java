@@ -16,5 +16,4 @@ public interface DataStorageInterface {
 
     public boolean deleteEntity(Client client, Class cls, String id);
 
-    public List<Client> getAllClients();
 }

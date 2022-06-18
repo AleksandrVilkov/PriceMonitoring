@@ -73,14 +73,4 @@ public class DataBaseAdapter implements DataStorageInterface {
         }
     }
 
-    public List<Client> getAllClients() {
-        try (var mongoClient = MongoClients.create()) {
-            MongoIterable<String> allNames = mongoClient.listDatabaseNames();
-            List<Client> clients = new ArrayList<>();
-            for (String name : allNames) {
-                clients.add(new Client(name, null));
-            }
-            return clients;
-        }
-    }
 }

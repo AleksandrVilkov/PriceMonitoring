@@ -15,8 +15,8 @@ public class ProductHelper {
     DataStorage dataStorage;
 
 
-    public List<Product> getClientProductsFromShops(String shop, String clientID) {
-        List<Product> productList = getAllClientProducts(clientID);
+    public List<Product> getClientProductsFromShops(String shop, Client client) {
+        List<Product> productList = getAllClientProducts(client);
         List<Product> result = new ArrayList<>();
         for (Product product : productList) {
             if (product.getShop().equalsIgnoreCase(shop)) {
@@ -26,13 +26,13 @@ public class ProductHelper {
         return result;
     }
 
-    public List<Product> getClientProductsFromPeriod(String clientID, String startDay, String endDay) {
+    public List<Product> getClientProductsFromPeriod(Client client, String startDay, String endDay) {
         Date startDate = ControllerHelper.getDateFromString(startDay);
         Date endDate = ControllerHelper.getDateFromString(endDay);
         endDate.setHours(23);
         endDate.setMinutes(59);
         endDate.setSeconds(59);
-        List<Product> allProducts = getAllClientProducts(clientID);
+        List<Product> allProducts = getAllClientProducts(client);
         List<Product> result = new ArrayList<>();
         for (Product product : allProducts) {
             Date productDate = product.getDate();
@@ -43,8 +43,8 @@ public class ProductHelper {
         return result;
     }
 
-    public List<Product> getAllClientProducts(String clientID) {
-        List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID, null), Product.class);
+    public List<Product> getAllClientProducts(Client client) {
+        List<BaseEntity> baseEntityList = dataStorage.readEntities(client, Product.class);
         List<Product> result = new ArrayList<>();
         for (BaseEntity baseEntity : baseEntityList) {
             if (baseEntity instanceof Product) {
@@ -55,9 +55,9 @@ public class ProductHelper {
     }
 
 
-    public Map<String, TreeSet<FixedPrice>> getSortedPrices(String clientID) {
+    public Map<String, TreeSet<FixedPrice>> getSortedPrices(Client client) {
 
-        List<BaseEntity> baseEntityList = dataStorage.readEntities(new Client(clientID, null), Product.class);
+        List<BaseEntity> baseEntityList = dataStorage.readEntities(client, Product.class);
         List<Product> products = new ArrayList<>();
         for (BaseEntity baseEntity : baseEntityList) {
             if (baseEntity instanceof Product) {

@@ -4,6 +4,7 @@ package com.vilkov.PriceMonitoring.controllers;
 import com.vilkov.PriceMonitoring.controllers.entity.EntityHelper;
 import com.vilkov.PriceMonitoring.controllers.entity.ProductVO;
 import com.vilkov.PriceMonitoring.model.ProductHelper;
+import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,9 +20,10 @@ public class ProductController {
     @Autowired
     ProductHelper productHelper;
 
-    @GetMapping("/getAllProduct/{clientID}")
-    public List<ProductVO> getAllClientProducts(@PathVariable String clientID) {
-        List<Product> products = productHelper.getAllClientProducts(clientID);
+    @PostMapping("/getAllProduct")
+    public List<ProductVO> getAllClientProducts(@RequestParam("clientID") String clientID,
+                                                @RequestParam("password") String password) {
+        List<Product> products = productHelper.getAllClientProducts(new Client(clientID, password.toCharArray()));
         List<ProductVO> result = new ArrayList<>();
         for (Product product : products) {
             result.add(EntityHelper.convertProductToProductVO(product));
@@ -29,10 +31,13 @@ public class ProductController {
         return result;
     }
 
-    @PostMapping("/getAllProductFromDate/{clientID}")
-    public List<ProductVO> getClientProductsFromPeriod(@PathVariable String clientID, @RequestParam("startDay") String startDay, @RequestParam("endDay") String endDay) {
+    @PostMapping("/getAllProductFromDate")
+    public List<ProductVO> getClientProductsFromPeriod(@RequestParam("clientID") String clientID,
+                                                       @RequestParam("password") String password,
+                                                       @RequestParam("startDay") String startDay,
+                                                       @RequestParam("endDay") String endDay) {
         List<ProductVO> productsVO = new ArrayList<>();
-        List<Product> products = productHelper.getClientProductsFromPeriod(clientID, startDay, endDay);
+        List<Product> products = productHelper.getClientProductsFromPeriod(new Client(clientID, password.toCharArray()), startDay, endDay);
         for (Product product : products) {
             productsVO.add(EntityHelper.convertProductToProductVO(product));
         }
@@ -41,8 +46,10 @@ public class ProductController {
 
 
     @PostMapping("/getAllProductFromShop/{clientID}")
-    public List<ProductVO> getClientProductsFromShops(@RequestParam("shop") String shop, @PathVariable String clientID) {
-        List<Product> products = productHelper.getClientProductsFromShops(shop, clientID);
+    public List<ProductVO> getClientProductsFromShops(@RequestParam("clientID") String clientID,
+                                                      @RequestParam("password") String password,
+                                                      @RequestParam("shop") String shop) {
+        List<Product> products = productHelper.getClientProductsFromShops(shop, new Client(clientID, password.toCharArray()));
         List<ProductVO> productsVO = new ArrayList<>();
         for (Product product : products) {
             productsVO.add(EntityHelper.convertProductToProductVO(product));
