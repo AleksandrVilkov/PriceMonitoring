@@ -26,9 +26,14 @@ public class DataBaseHelper {
         }
 
         if (baseEntity instanceof Client) {
+            StringBuilder password = new StringBuilder();
+            for (int i = 0; i < ((Client) baseEntity).getPassword().length; i++) {
+                password.append(((Client) baseEntity).getPassword()[i]);
+            }
             return new Document(Map.of(
                     "clientID", ((Client) baseEntity).getClientID(),
-                    "type", ((Client) baseEntity).getType()
+                    "password", password.toString(),
+                    "type", baseEntity.getType()
             ));
         }
         if (baseEntity instanceof Product) {
@@ -69,7 +74,8 @@ public class DataBaseHelper {
         }
         if (document.get("type").equals(Client.class.toString())) {
             String id = (String) document.get("clientID");
-            return new Client(id, null);
+            char[] password = document.get("password").toString().toCharArray();
+            return new Client(id, password);
         }
 
         if (document.get("type").equals(Product.class.toString())) {
