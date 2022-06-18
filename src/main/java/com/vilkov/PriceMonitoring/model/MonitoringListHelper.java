@@ -19,14 +19,13 @@ public class MonitoringListHelper {
     DataStorage dataStorage;
     Logger logger = Logger.getLogger("saveNewMonitoringUrl");
 
-    public Message saveNewMonitoringUrl(String clientID, String url) {
-        Client client = new Client(clientID, null);
+    public Message saveNewMonitoringUrl(Client client, String url) {
         Message message = new Message();
         if (!isCorrectUrl(url)) {
-            logger.warning("Получен не верный url от клиента " + clientID);
+            logger.warning("Получен не верный url от клиента " + client.getClientID());
             return new Message(Status.ERROR, "Прислан не корректный url");
         }
-        logger.info("get new url " + url + " for client " + clientID);
+        logger.info("get new url " + url + " for client " + client.getClientID());
         List<BaseEntity> monitoringList = dataStorage.readEntities(client, MonitoringList.class);
         MonitoringList result = new MonitoringList();
 
@@ -42,7 +41,7 @@ public class MonitoringListHelper {
             return message;
         } else {
             result.getUrls().add(url);
-            logger.info("url added to client " + clientID);
+            logger.info("url added to client " + client.getClientID());
         }
 
         if (dataStorage.updateEntity(result, client)) {
@@ -58,10 +57,10 @@ public class MonitoringListHelper {
 
     }
 
-    public Message deleteUrlFromMonitoring(String clientID, String url) {
+    public Message deleteUrlFromMonitoring(Client client, String url) {
         Logger logger = Logger.getLogger("saveNewMonitoringUrl");
-        logger.info("delete url " + url + " at client " + clientID);
-        Client client = new Client(clientID, null);
+        logger.info("delete url " + url + " at client " + client.getClientID());
+
         List<BaseEntity> monitoringList = dataStorage.readEntities(client, MonitoringList.class);
         boolean result = false;
         for (BaseEntity baseEntity : monitoringList) {
@@ -81,8 +80,7 @@ public class MonitoringListHelper {
 
     }
 
-    public List<String> getAllUrls(String clientID) {
-        Client client = new Client(clientID, null);
+    public List<String> getAllUrls(Client client) {
         List<BaseEntity> baseEntityList = dataStorage.readEntities(client, MonitoringList.class);
         List<String> result = new ArrayList<>();
         if (baseEntityList.isEmpty()) {

@@ -3,6 +3,7 @@ package com.vilkov.PriceMonitoring.controllers;
 import com.vilkov.PriceMonitoring.controllers.entity.EntityHelper;
 import com.vilkov.PriceMonitoring.controllers.entity.MessageVO;
 import com.vilkov.PriceMonitoring.model.MonitoringListHelper;
+import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,21 +18,21 @@ public class MonitoringUrlsController {
     @Autowired
     MonitoringListHelper monitoringListHelper;
 
-    @PostMapping("/add/{clientID}")
-    public MessageVO saveNewMonitoringUrl(@PathVariable String clientID, @RequestParam("url") String url) {
-        Message message = monitoringListHelper.saveNewMonitoringUrl(clientID, url);
+    @PostMapping("/saveUrl/")
+    public MessageVO saveNewMonitoringUrl(@RequestParam("clientID") String clientID, @RequestParam("password") String password, @RequestParam("url") String url) {
+        Message message = monitoringListHelper.saveNewMonitoringUrl(new Client(clientID, password.toCharArray()), url);
         return EntityHelper.convertMessageToMessageVO(message);
     }
 
-    @GetMapping("/delete/{clientID}/{url}")
-    public MessageVO deleteUrlFromMonitoring(@PathVariable String clientID, @PathVariable String url) {
-        Message message = monitoringListHelper.deleteUrlFromMonitoring(clientID, url);
+    @PostMapping("/delete")
+    public MessageVO deleteUrlFromMonitoring(@RequestParam("clientID") String clientID, @RequestParam("password") String password, @RequestParam("url") String url) {
+        Message message = monitoringListHelper.deleteUrlFromMonitoring(new Client(clientID, password.toCharArray()), url);
         return EntityHelper.convertMessageToMessageVO(message);
     }
 
-    @GetMapping("getAllURLs/{clientID}")
-    public List<String> getAllUrls(@PathVariable String clientID) {
-        return monitoringListHelper.getAllUrls(clientID);
+    @PostMapping("api/monitoring")
+    public List<String> getAllUrls(@RequestParam("clientID") String clientID, @RequestParam("password") String password) {
+        return monitoringListHelper.getAllUrls(new Client(clientID, password.toCharArray()));
     }
 }
 
