@@ -34,4 +34,9 @@ public class HTMLPageParserTest {
 
     }
 
+    @Test
+    public void getRenounceTest() {
+        MvideoResponseParser.getResponse("https://www.mvideo.ru/bff/products/prices?productIds=30051224");
+    }
+
 }
