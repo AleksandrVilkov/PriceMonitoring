@@ -15,7 +15,7 @@ public class ProductHelper {
     @Autowired
     DataStorage dataStorage;
 
-
+    //TODO добавить методов по аналитике: отдавать динамику, искать максимальную цену, реализовать сканирование и создание уведомления о снижении цены
     public List<Product> getClientProductsFromShops(String shop, Client client) {
         List<Product> productList = getAllClientProducts(client);
         List<Product> result = new ArrayList<>();
@@ -103,6 +103,7 @@ public class ProductHelper {
                 dataStorage.createEntity(product, client);
         }
     }
+
     public static Date getDateFromString(String stringDate) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         try {

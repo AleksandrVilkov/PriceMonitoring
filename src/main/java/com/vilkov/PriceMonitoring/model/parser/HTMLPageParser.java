@@ -21,6 +21,7 @@ public class HTMLPageParser {
     private static final String PEREKRESTOK = "www.perekrestok.ru";
     private static final String CITILINK = "www.citilink.ru";
 
+    //TODO  вынести настройки в пропперти файл
     public static Product searchProduct(String url) {
         final String cssQuery;
         final List<String> extraItemsName;
