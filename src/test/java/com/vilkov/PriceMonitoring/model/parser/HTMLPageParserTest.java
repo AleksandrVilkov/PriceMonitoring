@@ -3,6 +3,7 @@ package com.vilkov.PriceMonitoring.model.parser;
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Currency;
 import com.vilkov.PriceMonitoring.model.entity.Product;
+import com.vilkov.PriceMonitoring.model.parser.Mvideo.MvideoResponseParser;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
