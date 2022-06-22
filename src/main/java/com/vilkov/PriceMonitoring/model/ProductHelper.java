@@ -2,7 +2,8 @@ package com.vilkov.PriceMonitoring.model;
 
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.*;
-import com.vilkov.PriceMonitoring.model.parser.HTMLPageParser;
+import com.vilkov.PriceMonitoring.model.parsers.HTMLPageParser;
+import com.vilkov.PriceMonitoring.model.parsers.ParserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -93,7 +94,7 @@ public class ProductHelper {
             if (baseEntity instanceof MonitoringList) {
                 List<String> urls = ((MonitoringList) baseEntity).getUrls();
                 for (String url : urls) {
-                    result.add(HTMLPageParser.searchProduct(url));
+                    result.add(ParserHelper.searchProduct(url));
                 }
             }
         }
