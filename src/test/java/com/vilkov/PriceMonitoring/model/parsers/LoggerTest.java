@@ -1,15 +1,18 @@
 package com.vilkov.PriceMonitoring.model.parsers;
 
-import com.vilkov.PriceMonitoring.Logger.Logger;
-import com.vilkov.PriceMonitoring.Logger.MessageType;
-import com.vilkov.PriceMonitoring.Logger.Place;
+import com.vilkov.PriceMonitoring.logger.Logger;
+import com.vilkov.PriceMonitoring.logger.MessageType;
+import com.vilkov.PriceMonitoring.logger.Place;
 import org.junit.Test;
 
 public class LoggerTest {
     @Test
     public void createDirectoryTest() {
-       Logger logger = Logger.getInstance();
-       logger.save(MessageType.MSG,"Тестовая запись в лог", Place.CONTROLLER);
-        logger.save(MessageType.ERROR,"Тестовая запись ошибки в лог", Place.CONTROLLER);
+       Logger logger = new Logger("testing/77", "tests.txt");
+       logger.save("Тестовая запись в лог");
+        logger.save("Тестовая запись ошибки в лог");
+        Logger logger2 = new Logger("/testing2", "tests.txt");
+        logger2.save("Тестовая запись в лог2");
+        logger2.save("Тестовая запись ошибки в лог2");
     }
 }
