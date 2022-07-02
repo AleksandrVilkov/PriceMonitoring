@@ -19,7 +19,7 @@ public class ClientHelper {
     public Message createClient(Client client) {
         Client admin = dataStorage.getAdmin();
         if (clientAlreadyExists(client.getClientID())) {
-            return new Message(Status.ERROR, "Клиент уже существует");
+            return new Message(Status.ALREADY_EXIST, "Клиент уже существует");
         }
 
         if (dataStorage.createEntity(client, admin)) {
