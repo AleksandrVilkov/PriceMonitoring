@@ -28,7 +28,7 @@ public class DataBaseAdapter implements DataStorageInterface {
                 deleteEntity(client, MonitoringList.class, null);
             }
             mongoCollection.insertOne(DataBaseHelper.toDoc(baseEntity));
-            logger.save( new Date() + ": createEntity successful: client - " + client.getClientID());
+            logger.save( new Date() + ": createEntity successful: client - " + client.getClientID() + ". baseEntity: " + baseEntity.getClass());
             return true;
         } catch (Exception e) {
             logger.save(">>>ERROR " + new Date() + ": error createEntity: " + e.getMessage());
