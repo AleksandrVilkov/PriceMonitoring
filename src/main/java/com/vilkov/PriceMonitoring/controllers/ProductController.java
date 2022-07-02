@@ -3,6 +3,7 @@ package com.vilkov.PriceMonitoring.controllers;
 
 import com.vilkov.PriceMonitoring.controllers.entity.EntityHelper;
 import com.vilkov.PriceMonitoring.controllers.entity.ProductVO;
+import com.vilkov.PriceMonitoring.logger.Logger;
 import com.vilkov.PriceMonitoring.model.ProductHelper;
 import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.Product;
@@ -19,6 +20,8 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductHelper productHelper;
+
+    Logger logger = new Logger("ProductController", "ProductControllerLog.txt");
 
     @PostMapping("/getAllProduct")
     public List<ProductVO> getAllClientProducts(@RequestParam("clientID") String clientID,

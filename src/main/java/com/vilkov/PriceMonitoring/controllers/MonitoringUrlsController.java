@@ -2,6 +2,7 @@ package com.vilkov.PriceMonitoring.controllers;
 
 import com.vilkov.PriceMonitoring.controllers.entity.EntityHelper;
 import com.vilkov.PriceMonitoring.controllers.entity.MessageVO;
+import com.vilkov.PriceMonitoring.logger.Logger;
 import com.vilkov.PriceMonitoring.model.MonitoringListHelper;
 import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.Message;
@@ -17,7 +18,7 @@ import java.util.List;
 public class MonitoringUrlsController {
     @Autowired
     MonitoringListHelper monitoringListHelper;
-
+    Logger logger = new Logger("MonitoringUrlsController", "ProductControllerLog.txt");
     @PostMapping("/saveUrl/")
     public MessageVO saveNewMonitoringUrl(@RequestParam("clientID") String clientID, @RequestParam("password") String password, @RequestParam("url") String url) {
         Message message = monitoringListHelper.saveNewMonitoringUrl(new Client(clientID, password.toCharArray()), url);

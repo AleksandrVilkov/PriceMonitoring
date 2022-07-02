@@ -1,8 +1,6 @@
 package com.vilkov.PriceMonitoring.model.parsers;
 
 import com.vilkov.PriceMonitoring.logger.Logger;
-import com.vilkov.PriceMonitoring.logger.MessageType;
-import com.vilkov.PriceMonitoring.logger.Place;
 import org.junit.Test;
 
 public class LoggerTest {
