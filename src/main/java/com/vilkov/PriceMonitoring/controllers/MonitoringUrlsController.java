@@ -2,7 +2,7 @@ package com.vilkov.PriceMonitoring.controllers;
 
 import com.vilkov.PriceMonitoring.controllers.entity.EntityHelper;
 import com.vilkov.PriceMonitoring.controllers.entity.MessageVO;
-import com.vilkov.PriceMonitoring.logger.Logger;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import com.vilkov.PriceMonitoring.model.MonitoringListHelper;
 import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.Message;

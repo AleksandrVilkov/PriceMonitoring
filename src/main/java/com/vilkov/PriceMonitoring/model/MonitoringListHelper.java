@@ -1,6 +1,6 @@
 package com.vilkov.PriceMonitoring.model;
 
-import com.vilkov.PriceMonitoring.logger.Logger;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;

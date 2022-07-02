@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.logger;
+package com.vilkov.PriceMonitoring.model.logger;
 
 import java.io.*;
 import java.util.Properties;
@@ -44,7 +44,7 @@ public class Logger {
     private static FileReader tryGetFileReader() {
         FileReader fileReader;
         try {
-            fileReader = new FileReader("./src/main/java/com/vilkov/PriceMonitoring/Logger/logger.properties");
+            fileReader = new FileReader("./src/main/java/com/vilkov/PriceMonitoring/model/logger/logger.properties");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

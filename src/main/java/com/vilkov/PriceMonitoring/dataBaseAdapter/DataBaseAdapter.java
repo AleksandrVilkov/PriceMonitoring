@@ -6,15 +6,18 @@ import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
 import com.vilkov.PriceMonitoring.model.entity.Product;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
 public class DataBaseAdapter implements DataStorageInterface {
 
+    Logger logger = new Logger("DataStorage", "History.txt");
 
     @Override
     public boolean createEntity(BaseEntity baseEntity, Client client) {
@@ -25,8 +28,10 @@ public class DataBaseAdapter implements DataStorageInterface {
                 deleteEntity(client, MonitoringList.class, null);
             }
             mongoCollection.insertOne(DataBaseHelper.toDoc(baseEntity));
+            logger.save( new Date() + ": createEntity successful: client - " + client.getClientID());
             return true;
         } catch (Exception e) {
+            logger.save(">>>ERROR " + new Date() + ": error createEntity: " + e.getMessage());
             return false;
         }
     }
@@ -42,8 +47,10 @@ public class DataBaseAdapter implements DataStorageInterface {
                 Document document = cursor.next();
                 result.add(DataBaseHelper.fromDoc(document));
             }
+            logger.save( new Date() + ": readEntities successful: client - " + client.getClientID());
             return result;
         } catch (Exception e) {
+            logger.save(">>>ERROR " + new Date() + ": error readEntities: " + e.getMessage());
             return null;
         }
     }
@@ -67,8 +74,10 @@ public class DataBaseAdapter implements DataStorageInterface {
             MongoDatabase database = mongoClient.getDatabase(client.getClientID());
             MongoCollection<Document> collection = database.getCollection(cls.toString());
             collection.drop();
+            logger.save( new Date() + ": deleteEntity successful: client - " + client.getClientID());
             return true;
         } catch (Exception e) {
+            logger.save(">>>ERROR " + new Date() + "error deleteEntity: " + e.getMessage());
             return false;
         }
     }
