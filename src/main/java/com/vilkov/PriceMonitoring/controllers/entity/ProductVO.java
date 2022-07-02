@@ -1,19 +1,11 @@
 package com.vilkov.PriceMonitoring.controllers.entity;
 
 public class ProductVO {
-    private int id;
     private String name;
     private String price;
     private String shop;
     private String date;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

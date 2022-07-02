@@ -8,11 +8,21 @@ import com.vilkov.PriceMonitoring.model.entity.Product;
 public class EntityHelper {
     public static ProductVO convertProductToProductVO(Product product) {
         ProductVO productVO = new ProductVO();
-        productVO.setId(product.getId());
-        productVO.setName(product.getName());
-        String price = product.getPrice().getAmount() + " " + product.getPrice().getCurrency().name();
+        String name = product.getName() != null ? product.getName() : "Неизвестно";
+        productVO.setName(name);
+
+        double amount;
+        String currency;
+        if (product.getPrice() != null) {
+            amount = product.getPrice().getAmount() != 0 ? product.getPrice().getAmount() : 0;
+            currency = product.getPrice().getCurrency() != null ? product.getPrice().getCurrency().name() : "";
+        } else {
+            amount = 0;
+            currency = "";
+        }
+        String price = amount + " " + currency;
         productVO.setPrice(price);
-        productVO.setShop(product.getShop());
+        productVO.setShop(product.getShop() != null ? product.getShop() : "Неизвестен");
         productVO.setDate(product.getDate().toString());
         return productVO;
     }
