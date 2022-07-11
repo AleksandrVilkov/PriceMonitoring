@@ -31,7 +31,7 @@ public class MonitoringUrlsController {
         return EntityHelper.convertMessageToMessageVO(message);
     }
 
-    @PostMapping("api/monitoring")
+    @PostMapping("/getAllUrls")
     public List<String> getAllUrls(@RequestParam("clientID") String clientID, @RequestParam("password") String password) {
         return monitoringListHelper.getAllUrls(new Client(clientID, password.toCharArray()));
     }

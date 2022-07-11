@@ -48,7 +48,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("/getAllProductFromShop/{clientID}")
+    @PostMapping("/getAllProductFromShop")
     public List<ProductVO> getClientProductsFromShops(@RequestParam("clientID") String clientID,
                                                       @RequestParam("password") String password,
                                                       @RequestParam("shop") String shop) {

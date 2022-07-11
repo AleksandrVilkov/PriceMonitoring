@@ -27,9 +27,9 @@ public class MvideoParser implements Parser {
         String productName = getProductName(url);
         Message message;
         if (priceAmount != 0 && productName != null) {
-            message = new Message(Status.SUCCESS, "Успешно!");
+            message = new Message(Status.SUCCESS, "РЈСЃРїРµС€РЅРѕ!");
         } else {
-            message = new Message(Status.ERROR, "Ошибка получения!");
+            message = new Message(Status.ERROR, "РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ!");
         }
 
         return new Product(getProductName(url),
@@ -110,7 +110,7 @@ public class MvideoParser implements Parser {
     }
 
     private static String getProductIDfromUrl(String url) {
-        //ID товара - последний элемент
+        //ID С‚РѕРІР°СЂР° - РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚
         String[] productId = url.split("-");
         return productId[productId.length - 1];
     }
