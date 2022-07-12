@@ -4,6 +4,8 @@ import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Currency;
 import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.parsers.Mvideo.MvideoParser;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ public class HTMLPageParserTest {
 
     @Test
     public void getProductTest() {
-        String URL = "https://www.perekrestok.ru/cat/366/p/smes-salatnaa-belaa-daca-tango-mix-65g-3451379";
+        String URL = "https://video-shoper.ru";
         Product perecrectokProduct = ParserHelper.searchProduct(URL);
         Assert.assertNotNull(perecrectokProduct);
         Assert.assertNotNull(perecrectokProduct.getPrice());
