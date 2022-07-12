@@ -2,10 +2,7 @@ package com.vilkov.PriceMonitoring.dataBaseAdapter;
 
 import com.mongodb.client.*;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorageInterface;
-import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
-import com.vilkov.PriceMonitoring.model.entity.Client;
-import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
-import com.vilkov.PriceMonitoring.model.entity.Product;
+import com.vilkov.PriceMonitoring.model.entity.*;
 import com.vilkov.PriceMonitoring.model.logger.Logger;
 import org.bson.Document;
 import org.springframework.stereotype.Component;
@@ -17,7 +14,7 @@ import java.util.List;
 @Component
 public class DataBaseAdapter implements DataStorageInterface {
 
-    Logger logger = new Logger("DataStorage", "History.txt");
+    Logger logger = new Logger("Data_Base_log", "log.txt");
 
     @Override
     public boolean createEntity(BaseEntity baseEntity, Client client) {

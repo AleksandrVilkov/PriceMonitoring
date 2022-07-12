@@ -17,7 +17,7 @@ public class DataStorage {
     @Autowired
     private DataStorageInterface dataBaseAdapter;
 
-    Logger logger = new Logger("DataStorage", "History.txt");
+    Logger logger = new Logger("Data_Storage_log", "log.txt");
 
     public boolean createEntity(BaseEntity baseEntity, Client client) {
         return dataBaseAdapter.createEntity(baseEntity, client);

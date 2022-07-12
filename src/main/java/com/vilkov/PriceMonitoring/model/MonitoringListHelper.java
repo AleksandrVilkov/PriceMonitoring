@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class MonitoringListHelper {
     @Autowired
     DataStorage dataStorage;
-    Logger logger = new Logger("ClientController", "ClientControllerLog.txt");
+    Logger logger = new Logger("MonitoringListHelper_log", "log.txt");
 
     public Message saveNewMonitoringUrl(Client client, String url) {
         Message message = new Message();

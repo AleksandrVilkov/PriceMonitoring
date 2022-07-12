@@ -16,7 +16,7 @@ public class ClientHelper {
 
     @Autowired
     DataStorage dataStorage;
-    Logger logger = new Logger("Clients", "clients.txt");
+    Logger logger = new Logger("Clients_log", "log.txt");
 
     public Message createClient(Client client) {
         Client admin = dataStorage.getAdmin();

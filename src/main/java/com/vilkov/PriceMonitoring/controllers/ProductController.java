@@ -21,7 +21,7 @@ public class ProductController {
     @Autowired
     ProductHelper productHelper;
 
-    Logger logger = new Logger("ProductController", "ProductControllerLog.txt");
+    Logger logger = new Logger("Product_Controller_log", "log.txt");
 
     @PostMapping("/getAllProduct")
     public List<ProductVO> getAllClientProducts(@RequestParam("clientID") String clientID,

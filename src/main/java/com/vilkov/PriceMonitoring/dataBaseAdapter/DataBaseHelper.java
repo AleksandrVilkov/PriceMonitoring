@@ -4,6 +4,7 @@ import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.*;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class DataBaseHelper {
         if (baseEntity instanceof MonitoringList) {
             return new Document(Map.of(
                     "urls", ((MonitoringList) baseEntity).getUrls(),
-                    "type", ((MonitoringList) baseEntity).getType()
+                    "type", (baseEntity).getType()
             ));
         }
 
@@ -45,8 +46,32 @@ public class DataBaseHelper {
                     "currencyPrice", ((Product) baseEntity).getPrice().getCurrency().name(),
                     "shop", ((Product) baseEntity).getShop(),
                     "date", ((Product) baseEntity).getDate(),
-                    "type", ((Product) baseEntity).getType()
+                    "type", (baseEntity).getType()
             ));
+        }
+        if (baseEntity instanceof ValuteContainer) {
+            List<Document> valutes = new ArrayList<>();
+            for (Valute valute : ((ValuteContainer) baseEntity).getValutes()) {
+                Document document = new Document(Map.of(
+                        "date", valute.getDate(),
+                        "charCode", valute.getCharCode(),
+                        "value", valute.getValue(),
+                        "previous", valute.getPrevious(),
+                        "numCode", valute.getNumCode(),
+                        "nominal", valute.getNominal(),
+                        "name", valute.getName()
+                ));
+                valutes.add(document);
+            }
+
+
+            return new Document(Map.of(
+                    "type", (baseEntity).getType(),
+                    "createDate", ((ValuteContainer) baseEntity).getDateOfCreation(),
+                    "Valutes", valutes
+            ));
+
+
         }
         return null;
     }
@@ -90,8 +115,13 @@ public class DataBaseHelper {
             Date date = (Date) document.get("date");
             Message message = new Message(Status.SUCCESS, "Successfully retrieved from DB");
             return new Product(name, price, shop, url, date, message);
+        }
+        if (document.get("type").equals(ValuteContainer.class.toString())) {
+            //TODO реализовать
 
         }
+
+
         return null;
     }
 }

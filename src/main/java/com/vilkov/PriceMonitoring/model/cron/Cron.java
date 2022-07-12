@@ -1,8 +1,10 @@
 package com.vilkov.PriceMonitoring.model.cron;
 
+import com.vilkov.PriceMonitoring.model.CurrencyRate.CurrencyRate;
 import com.vilkov.PriceMonitoring.model.ProductHelper;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.Client;
+import com.vilkov.PriceMonitoring.model.entity.ValuteContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,10 @@ public class Cron {
     DataStorage dataStorage;
     @Autowired
     ProductHelper productHelper;
+
+    @Autowired
+    CurrencyRate currencyRate;
+
     @Scheduled(fixedRate = Config.FREQUENCY_DEMON_WORK)
     @Async
     public void getNewProducts() {
@@ -31,6 +37,15 @@ public class Cron {
             productHelper.getAndSaveCurrentPricesOfProducts(client);
             logger.info("Cron-task getNewProducts is completed for client: " + client.getClientID());
         }
+    }
+
+    @Scheduled(fixedRate = Config.FREQUENCY_DEMON_WORK)
+    @Async
+    public void getRates() {
+        ValuteContainer valuteCntr = new ValuteContainer();
+        valuteCntr.setValutes(currencyRate.getRate());
+        dataStorage.createEntity(valuteCntr, new Client("admin", "admin".toCharArray()));
+        System.out.println();
     }
 }
 

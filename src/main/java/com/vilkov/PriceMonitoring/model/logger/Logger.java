@@ -7,6 +7,7 @@ public class Logger {
     private final String fullPath;
     private final String fileName;
 
+    //TODO вынести названия файлов и папок с логами в отдельный пропрерти файл. Сделать методы чтения этих имен. Переписать в местах использования
     public Logger(String folderName, String fileName) {
         Properties properties = getLoggerProperties();
         File root = new File(properties.getProperty("rootFolder") + "/" + folderName + "/");

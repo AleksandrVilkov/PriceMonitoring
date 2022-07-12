@@ -4,13 +4,11 @@ import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Currency;
 import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.parsers.Mvideo.MvideoParser;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 public class HTMLPageParserTest {
-
+    //TODO покрыть тестами все паблик методы, поправить структуру директории
     @Test
     public void getProductTest() {
         String URL = "https://video-shoper.ru";

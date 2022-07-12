@@ -18,7 +18,7 @@ import java.util.List;
 public class MonitoringUrlsController {
     @Autowired
     MonitoringListHelper monitoringListHelper;
-    Logger logger = new Logger("MonitoringUrlsController", "ProductControllerLog.txt");
+    Logger logger = new Logger("MonitoringUrls_Controller_log", "log.txt");
     @PostMapping("/saveUrl/")
     public MessageVO saveNewMonitoringUrl(@RequestParam("clientID") String clientID, @RequestParam("password") String password, @RequestParam("url") String url) {
         Message message = monitoringListHelper.saveNewMonitoringUrl(new Client(clientID, password.toCharArray()), url);

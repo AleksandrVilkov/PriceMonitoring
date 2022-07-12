@@ -1,10 +1,9 @@
 package com.vilkov.PriceMonitoring.model.CurrencyRate;
 
-import com.vilkov.PriceMonitoring.model.entity.Currency;
-import com.vilkov.PriceMonitoring.model.entity.Rate;
+import com.vilkov.PriceMonitoring.model.entity.Valute;
 
-import java.util.Date;
+import java.util.List;
 
 public interface CurrencyRateInterface {
-    public Rate getRate(Currency firstCurrency, Currency secondCurrency, Date date);
+    public List<Valute> getValutes();
 }
