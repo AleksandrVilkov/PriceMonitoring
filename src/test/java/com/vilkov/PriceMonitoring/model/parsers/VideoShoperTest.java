@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class VideoShoperTest {
     @Test
-    public void getProducttest() {
+    public void getProductTest() {
         VideoShoperParser videoShoperParser = new VideoShoperParser();
         Product product = videoShoperParser.getProduct("https://video-shoper.ru/shipment/pylesos-dyson-v15-detect-absolute.html");
         System.out.println(product);
