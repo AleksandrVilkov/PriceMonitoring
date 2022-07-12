@@ -21,7 +21,7 @@ public class MvideoParser implements Parser {
     static Properties properties = new Properties();
     static Logger logger = Logger.getLogger("MvideoResponseParser");
 
-    public static Product getProduct(String url) {
+    public Product getProduct(String url) {
         int priceAmount = getPrice(url);
         Money money = new Money(Double.parseDouble(String.valueOf(priceAmount)), Currency.RUB);
         String productName = getProductName(url);
@@ -42,9 +42,9 @@ public class MvideoParser implements Parser {
     }
 
 
-    private static int getPrice(String url) {
+    private int getPrice(String url) {
         StringBuilder response;
-        try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/vilkov/PriceMonitoring/model/parser/Mvideo/requestProperty.properties")) {
+        try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/vilkov/PriceMonitoring/model/parsers/Mvideo/requestProperty.properties")) {
             properties.load(fileInputStream);
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(getRequestUrlForPrice(url)).openConnection();
             httpURLConnection.setRequestMethod(properties.getProperty("requestMethodGET"));
@@ -72,7 +72,7 @@ public class MvideoParser implements Parser {
     }
 
 
-    private static String getProductName(String url) {
+    private String getProductName(String url) {
         StringBuilder response;
         HashMap<String, Object> objectMapper;
         try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/vilkov/PriceMonitoring/model/parser/Mvideo/requestProperty.properties")) {
@@ -101,15 +101,15 @@ public class MvideoParser implements Parser {
         return null;
     }
 
-    private static String getRequestUrlForPrice(String url) {
+    private String getRequestUrlForPrice(String url) {
         return "https://www.mvideo.ru/bff/products/prices?productIds=" + getProductIDfromUrl(url);
     }
 
-    private static String getRequestUrlForProductName(String url) {
+    private String getRequestUrlForProductName(String url) {
         return "https://www.mvideo.ru/bff/product-details?productId=" + getProductIDfromUrl(url);
     }
 
-    private static String getProductIDfromUrl(String url) {
+    private String getProductIDfromUrl(String url) {
         //ID товара - последний элемент
         String[] productId = url.split("-");
         return productId[productId.length - 1];

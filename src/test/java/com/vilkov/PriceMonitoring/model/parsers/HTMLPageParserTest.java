@@ -41,8 +41,9 @@ public class HTMLPageParserTest {
 
     @Test
     public void getRenounceTest() {
-        Product product1 = MvideoParser.getProduct("https://www.mvideo.ru/products/smartfon-xiaomi-redmi-9a-32gb-granite-gray-30051224");
-        Product product2 = MvideoParser.getProduct("https://www.mvideo.ru/products/vneshnii-akkumulyator-tfn-power-mate-20000-mach-chernyi-tfn-pb-237-bk-50153484");
+        MvideoParser mvideoParser = new MvideoParser();
+        Product product1 = mvideoParser.getProduct("https://www.mvideo.ru/products/smartfon-xiaomi-redmi-9a-32gb-granite-gray-30051224");
+        Product product2 = mvideoParser.getProduct("https://www.mvideo.ru/products/vneshnii-akkumulyator-tfn-power-mate-20000-mach-chernyi-tfn-pb-237-bk-50153484");
         Assert.assertEquals(product1.getMessage().getStatus(), Status.SUCCESS);
         Assert.assertEquals(product2.getMessage().getStatus(), Status.SUCCESS);
     }
