@@ -1,65 +1,112 @@
 package com.vilkov.PriceMonitoring.model.parsers;
 
+import com.vilkov.PriceMonitoring.model.Status;
+import com.vilkov.PriceMonitoring.model.entity.Message;
 import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.parsers.Mvideo.MvideoParser;
 import com.vilkov.PriceMonitoring.model.parsers.VideoShoper.VideoShoperParser;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class ParserHelper {
-    private static final String GLOBUS = "www.globus.ru";
-    private static final String PEREKRESTOK = "www.perekrestok.ru";
-    private static final String CITILINK = "www.citilink.ru";
-    private static final String MVIDEO = "www.mvideo.ru";
-    private static final String STORE77 = "https://store77.net/";
-    private static final String VIDEO_SHOPER = "https://video-shoper.ru";
-    //TODO  вынести настройки в пропперти файл
 
     public static Product searchProduct(String url) {
+        Properties properties = getParserProperty();
+
+        final String GLOBUS = properties.getProperty("GLOBUS");
+        final String PEREKRESTOK = properties.getProperty("PEREKRESTOK");
+        final String CITILINK = properties.getProperty("CITILINK");
+        final String MVIDEO = properties.getProperty("MVIDEO");
+        //final String STORE77 = properties.getProperty("STORE77");
+        final String VIDEO_SHOPER = properties.getProperty("VIDEO_SHOPER");
+
+        Product result = null;
+
+        if (url.contains(GLOBUS)) {
+            result = searchGlobusProduct(url, GLOBUS);
+        }
+        if (url.contains(PEREKRESTOK)) {
+            result = searchPerekrestokProduct(url, PEREKRESTOK);
+        }
+        if (url.contains(CITILINK)) {
+            result = searchCitilinkProduct(url, CITILINK);
+        }
+        if (url.contains(MVIDEO)) {
+            result = searchMvideoProduct(url);
+        }
+        if (url.contains(VIDEO_SHOPER)) {
+            result = searchVideoShoperProduct(url);
+        }
+        if (result == null){
+            result = new Product();
+            Message message = new Message(Status.ERROR, "Invalid url. Probably this store is not supported");
+            result.setMessage(message);
+        }
+        return result;
+    }
+
+    private static Properties getParserProperty() {
+        Properties properties;
+        try (FileInputStream fis = new FileInputStream("src/main/java/com/vilkov/PriceMonitoring/model/parsers/parsers.properties")) {
+            properties = new Properties();
+            properties.load(fis);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return properties;
+    }
+
+    private static Product searchMvideoProduct(String url) {
+        MvideoParser mvideoParser = new MvideoParser();
+        return mvideoParser.getProduct(url);
+    }
+
+    private static Product searchVideoShoperProduct(String url) {
+        VideoShoperParser videoShoperParser = new VideoShoperParser();
+        return videoShoperParser.getProduct(url);
+    }
+
+    private static Product searchGlobusProduct(String url, String shop) {
+        final String cssQuery;
+        final List<String> extraItemsName;
+        cssQuery = "span.catalog-detail__item-price-actual-main";
+        extraItemsName = new ArrayList<>();
+        extraItemsName.add(" | Сеть гипермаркетов «Глобус»");
+        return HTMLPageParser.getProduct(url, cssQuery, extraItemsName, shop);
+    }
+
+    private static Product searchPerekrestokProduct(String url, String shop) {
         final String cssQuery;
         final List<String> extraItemsName;
         final List<String> extraItemsPrice;
-        if (url.contains(GLOBUS)) {
-            cssQuery = "span.catalog-detail__item-price-actual-main";
-            extraItemsName = new ArrayList<>();
-            extraItemsName.add(" | Сеть гипермаркетов «Глобус»");
-            return HTMLPageParser.getProduct(url, cssQuery, extraItemsName, GLOBUS);
-        } else if (url.contains(PEREKRESTOK)) {
-            cssQuery = "div.price-new";
-            extraItemsName = new ArrayList<>();
-            extraItemsName.add(" - купить с доставкой на дом в Перекрёстке");
-            extraItemsPrice = new ArrayList<>();
-            extraItemsPrice.add("\n");
-            extraItemsPrice.add("&nbsp;");
-            extraItemsPrice.add("₽");
-            extraItemsPrice.add(" ");
-            extraItemsPrice.add(" ");
-            return HTMLPageParser.getProduct(url, cssQuery, extraItemsName, extraItemsPrice, PEREKRESTOK);
+        cssQuery = "div.price-new";
+        extraItemsName = new ArrayList<>();
+        extraItemsName.add(" - купить с доставкой на дом в Перекрёстке");
+        extraItemsPrice = new ArrayList<>();
+        extraItemsPrice.add("\n");
+        extraItemsPrice.add("&nbsp;");
+        extraItemsPrice.add("₽");
+        extraItemsPrice.add(" ");
+        extraItemsPrice.add(" ");
+        return HTMLPageParser.getProduct(url, cssQuery, extraItemsName, extraItemsPrice, shop);
+    }
 
-        } else if (url.contains(CITILINK)) {
-            //id товара находится в конце url
-            String[] urlChunk = url.replace("/", "").split("-");
-            cssQuery = "#product-item-" + urlChunk[urlChunk.length - 1] + " > div.ProductCardLayout__product-description > div.ProductHeader.js--ProductHeader > div.ProductHeader__price-block > div.ProductHeader__price > div.ProductHeader__price-bonus > div > span > span.ProductHeader__price-default_current-price.js--ProductHeader__price-default_current-price";
-            extraItemsName = new ArrayList<>();
-            extraItemsName.add("- купить в Ситилинк | ");
-            extraItemsName.add(urlChunk[urlChunk.length - 1]);
-            extraItemsPrice = new ArrayList<>();
-            extraItemsPrice.add("\n");
-            extraItemsPrice.add(" ");
-            return HTMLPageParser.getProduct(url, cssQuery, extraItemsName, extraItemsPrice, CITILINK);
-        } else if (url.contains(MVIDEO)) {
-            MvideoParser mvideoParser = new MvideoParser();
-            return mvideoParser.getProduct(url);
-        } else if (url.contains(STORE77)) {
-//            cssQuery = "price_title_product";
-//            return HTMLPageParser.getProduct(url,cssQuery,STORE77);
-        } else if (url.contains(VIDEO_SHOPER)) {
-            VideoShoperParser videoShoperParser = new VideoShoperParser();
-            return videoShoperParser.getProduct(url);
-        } else {
-            return null;
-        }
-        return null;
+    private static Product searchCitilinkProduct(String url, String shop) {
+
+        final List<String> extraItemsName = new ArrayList<>();
+        final List<String> extraItemsPrice = new ArrayList<>();
+
+        //id товара находится в конце url
+        String[] urlChunk = url.replace("/", "").split("-");
+        final String cssQuery = "#product-item-" + urlChunk[urlChunk.length - 1] + " > div.ProductCardLayout__product-description > div.ProductHeader.js--ProductHeader > div.ProductHeader__price-block > div.ProductHeader__price > div.ProductHeader__price-bonus > div > span > span.ProductHeader__price-default_current-price.js--ProductHeader__price-default_current-price";
+
+        extraItemsName.add("- купить в Ситилинк | ");
+        extraItemsName.add(urlChunk[urlChunk.length - 1]);
+        extraItemsPrice.add("\n");
+        extraItemsPrice.add(" ");
+        return HTMLPageParser.getProduct(url, cssQuery, extraItemsName, extraItemsPrice, shop);
     }
 }
