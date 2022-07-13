@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.model.CurrencyRate;
+package com.vilkov.PriceMonitoring.model.valute;
 import com.vilkov.PriceMonitoring.model.entity.Valute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ public class CurrencyRate {
     @Autowired
     CurrencyRateInterface currencyRate;
 
-    public List<Valute> getRate() {
+    public List<Valute> getValutes() {
         return currencyRate.getValutes();
     }
 }

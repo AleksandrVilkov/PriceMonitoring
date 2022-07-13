@@ -1,7 +1,7 @@
 package com.vilkov.PriceMonitoring.cbrAdapter;
 
 import com.vilkov.PriceMonitoring.HttpClient.HTTPClient;
-import com.vilkov.PriceMonitoring.model.CurrencyRate.CurrencyRateInterface;
+import com.vilkov.PriceMonitoring.model.valute.CurrencyRateInterface;
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Message;
 import com.vilkov.PriceMonitoring.model.entity.Valute;
