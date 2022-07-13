@@ -7,7 +7,6 @@ public class Logger {
     private final String fullPath;
     private final String fileName;
 
-    //TODO вынести названия файлов и папок с логами в отдельный пропрерти файл. Сделать методы чтения этих имен. Переписать в местах использования
     public Logger(String folderName, String fileName) {
         Properties properties = getLoggerProperties();
         File root = new File(properties.getProperty("rootFolder") + "/" + folderName + "/");
@@ -45,7 +44,7 @@ public class Logger {
     private static FileReader tryGetFileReader() {
         FileReader fileReader;
         try {
-            fileReader = new FileReader("./src/main/java/com/vilkov/PriceMonitoring/model/logger/logger.properties");
+            fileReader = new FileReader("./src/main/resources/logger.properties");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

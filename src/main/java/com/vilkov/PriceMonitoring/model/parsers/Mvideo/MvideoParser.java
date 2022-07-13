@@ -44,7 +44,7 @@ public class MvideoParser implements Parser {
 
     private int getPrice(String url) {
         StringBuilder response;
-        try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/vilkov/PriceMonitoring/model/parsers/Mvideo/requestProperty.properties")) {
+        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/mvideoRequestProperty.properties")) {
             properties.load(fileInputStream);
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(getRequestUrlForPrice(url)).openConnection();
             httpURLConnection.setRequestMethod(properties.getProperty("requestMethodGET"));
@@ -75,7 +75,7 @@ public class MvideoParser implements Parser {
     private String getProductName(String url) {
         StringBuilder response;
         HashMap<String, Object> objectMapper;
-        try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/vilkov/PriceMonitoring/model/parser/Mvideo/requestProperty.properties")) {
+        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/mvideoRequestProperty.properties")) {
             properties.load(fileInputStream);
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(getRequestUrlForProductName(url))
                     .openConnection();
