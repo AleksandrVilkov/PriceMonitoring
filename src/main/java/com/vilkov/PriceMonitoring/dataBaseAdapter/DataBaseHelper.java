@@ -2,22 +2,23 @@ package com.vilkov.PriceMonitoring.dataBaseAdapter;
 
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.*;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import static com.vilkov.PriceMonitoring.model.entity.Currency.RUB;
 import static com.vilkov.PriceMonitoring.model.entity.Currency.UNKNOWN;
 
 public class DataBaseHelper {
 
-    static Logger logger = Logger.getLogger("DataBaseHelper");
+    private final static Logger logger = new Logger(Logger.getLoggerProperties().getProperty("dbAdapterLogFolder"),
+            Logger.getLoggerProperties().getProperty("dbAdapterLogFolderFileName"));
 
-
+    //TODO покрыть логами
     public static Document toDoc(BaseEntity baseEntity) {
         if (baseEntity instanceof MonitoringList) {
             return new Document(Map.of(

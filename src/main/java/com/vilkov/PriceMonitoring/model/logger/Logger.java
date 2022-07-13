@@ -31,7 +31,7 @@ public class Logger {
         }
     }
 
-    private static Properties getLoggerProperties() {
+    public static Properties getLoggerProperties() {
         try {
             FileReader fileReader = tryGetFileReader();
             Properties properties = new Properties();

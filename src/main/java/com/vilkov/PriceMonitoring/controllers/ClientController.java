@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
     @Autowired
     ClientHelper clientHelper;
-    Logger logger = new Logger("Client_Controller_log", "log.txt");
+    private final Logger logger = new Logger(Logger.getLoggerProperties().getProperty("controllersLogFolder"),
+            Logger.getLoggerProperties().getProperty("controllersLogFileName"));
+    //TODO покрыть логами
     @PostMapping("/create")
     public MessageVO createClient(@RequestParam("id") String id, @RequestParam("password") String clientPassword) {
         char[] password = clientPassword.toCharArray();

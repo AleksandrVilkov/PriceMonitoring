@@ -2,7 +2,6 @@ package com.vilkov.PriceMonitoring.model;
 
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.*;
-import com.vilkov.PriceMonitoring.model.parsers.HTMLPageParser;
 import com.vilkov.PriceMonitoring.model.parsers.ParserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,7 @@ public class ProductHelper {
     @Autowired
     DataStorage dataStorage;
 
+    //Покрыть логами
     //TODO добавить методов по аналитике: отдавать динамику, искать максимальную цену, реализовать сканирование и создание уведомления о снижении цены
     public List<Product> getClientProductsFromShops(String shop, Client client) {
         List<Product> productList = getAllClientProducts(client);

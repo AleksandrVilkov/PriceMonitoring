@@ -8,7 +8,10 @@ import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.FixedPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +24,7 @@ public class AnalyticsController {
     @Autowired
     ProductHelper productHelper;
 
+    //TODO покрыть логами
     @PostMapping("/getDynamicPrice")
     public Map<String, TreeSet<FixedPriceVO>> getDynamicPrice(@RequestParam("clientID") String clientID, @RequestParam("password") String password) {
         Client client = new Client(clientID, password.toCharArray());

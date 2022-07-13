@@ -1,11 +1,11 @@
 package com.vilkov.PriceMonitoring.model;
 
-import com.vilkov.PriceMonitoring.model.logger.Logger;
 import com.vilkov.PriceMonitoring.model.dataStorage.DataStorage;
 import com.vilkov.PriceMonitoring.model.entity.BaseEntity;
 import com.vilkov.PriceMonitoring.model.entity.Client;
 import com.vilkov.PriceMonitoring.model.entity.Message;
 import com.vilkov.PriceMonitoring.model.entity.MonitoringList;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,15 +18,16 @@ import java.util.regex.Pattern;
 public class MonitoringListHelper {
     @Autowired
     DataStorage dataStorage;
-    Logger logger = new Logger("MonitoringListHelper_log", "log.txt");
+    private final Logger logger = new Logger(Logger.getLoggerProperties().getProperty("modelLogFolder"),
+            Logger.getLoggerProperties().getProperty("modelLogFileName"));
 
     public Message saveNewMonitoringUrl(Client client, String url) {
         Message message = new Message();
         if (!isCorrectUrl(url)) {
-            logger.save(new Date() + ": Получен не верный url от клиента " + client.getClientID());
-            return new Message(Status.ERROR, "Прислан не корректный url");
+            message = new Message(Status.ERROR, "Прислан не корректный url от клиента " + client.getClientID());
+            logger.save(new Date() + ": " + message);
+            return message;
         }
-        logger.save(new Date() + ": Get new url " + url + " for client " + client.getClientID());
         List<BaseEntity> monitoringList = dataStorage.readEntities(client, MonitoringList.class);
         MonitoringList result = new MonitoringList();
 
@@ -38,7 +39,7 @@ public class MonitoringListHelper {
         if (result.getUrls().contains(url)) {
             message.setStatus(Status.SUCCESS);
             message.setMessage(message.getMessage() + "Url не добавлен, потому что уже существует");
-            logger.save(new Date() + ": Url " + url + " at " + client.getClientID() + " already exists");
+            logger.save(new Date() + ": " + message.toString());
             return message;
         } else {
             result.getUrls().add(url);
@@ -59,8 +60,6 @@ public class MonitoringListHelper {
     }
 
     public Message deleteUrlFromMonitoring(Client client, String url) {
-        logger.save(new Date() + ": delete url " + url + " at client " + client.getClientID());
-
         List<BaseEntity> monitoringList = dataStorage.readEntities(client, MonitoringList.class);
         boolean result = false;
         for (BaseEntity baseEntity : monitoringList) {
@@ -71,10 +70,10 @@ public class MonitoringListHelper {
             }
         }
         if (result) {
-            logger.save(new Date() + ": successful deleting url " + url + " by client " + client.getClientID());
             return new Message(Status.SUCCESS, "URL удален");
         } else {
-            logger.save(new Date() + " deletion error: url - " + url + ", client - " + client.getClientID());
+            Message message = new Message(Status.ERROR, "Ошибка удаления " + url + ". Client - " + client.getClientID());
+            logger.save(new Date() + " :" + message);
             return new Message(Status.ERROR, "Ошибка удаления");
         }
     }

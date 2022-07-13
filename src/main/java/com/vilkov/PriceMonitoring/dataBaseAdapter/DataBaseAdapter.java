@@ -14,7 +14,8 @@ import java.util.List;
 @Component
 public class DataBaseAdapter implements DataStorageInterface {
 
-    Logger logger = new Logger("Data_Base_log", "log.txt");
+    private final Logger logger = new Logger(Logger.getLoggerProperties().getProperty("dbAdapterLogFolder"),
+            Logger.getLoggerProperties().getProperty("dbAdapterLogFolderFileName"));
 
     @Override
     public boolean createEntity(BaseEntity baseEntity, Client client) {

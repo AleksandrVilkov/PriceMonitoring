@@ -37,4 +37,9 @@ public class Message implements BaseEntity {
     public String getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "MESSAGE: " + this.status.name() + ": " + this.message;
+    }
 }

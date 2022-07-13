@@ -3,15 +3,19 @@ package com.vilkov.PriceMonitoring.model.parsers;
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Message;
 import com.vilkov.PriceMonitoring.model.entity.Product;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import com.vilkov.PriceMonitoring.model.parsers.Mvideo.MvideoParser;
 import com.vilkov.PriceMonitoring.model.parsers.VideoShoper.VideoShoperParser;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 public class ParserHelper {
+    private static Logger logger = new Logger(Logger.getLoggerProperties().getProperty("modelLogFolder"),
+            Logger.getLoggerProperties().getProperty("modelLogFileName"));
 
     public static Product searchProduct(String url) {
         Properties properties = getParserProperty();
@@ -40,9 +44,10 @@ public class ParserHelper {
         if (url.contains(VIDEO_SHOPER)) {
             result = searchVideoShoperProduct(url);
         }
-        if (result == null){
+        if (result == null) {
             result = new Product();
             Message message = new Message(Status.ERROR, "Invalid url. Probably this store is not supported");
+            logger.save(new Date() + " " + message.toString());
             result.setMessage(message);
         }
         return result;
@@ -50,7 +55,7 @@ public class ParserHelper {
 
     private static Properties getParserProperty() {
         Properties properties;
-        try (FileInputStream fis = new FileInputStream("src/main/java/com/vilkov/PriceMonitoring/model/parsers/parsers.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/main/resources/parsers.properties")) {
             properties = new Properties();
             properties.load(fis);
         } catch (Exception e) {
@@ -102,7 +107,6 @@ public class ParserHelper {
         //id товара находится в конце url
         String[] urlChunk = url.replace("/", "").split("-");
         final String cssQuery = "#product-item-" + urlChunk[urlChunk.length - 1] + " > div.ProductCardLayout__product-description > div.ProductHeader.js--ProductHeader > div.ProductHeader__price-block > div.ProductHeader__price > div.ProductHeader__price-bonus > div > span > span.ProductHeader__price-default_current-price.js--ProductHeader__price-default_current-price";
-
         extraItemsName.add("- купить в Ситилинк | ");
         extraItemsName.add(urlChunk[urlChunk.length - 1]);
         extraItemsPrice.add("\n");

@@ -5,6 +5,7 @@ import com.vilkov.PriceMonitoring.model.entity.Currency;
 import com.vilkov.PriceMonitoring.model.entity.Message;
 import com.vilkov.PriceMonitoring.model.entity.Money;
 import com.vilkov.PriceMonitoring.model.entity.Product;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,11 +15,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class HTMLPageParser {
 
-
+    private static final Logger logger = new Logger(Logger.getLoggerProperties().getProperty("modelLogFolder"),
+            Logger.getLoggerProperties().getProperty("modelLogFileName"));
 
     public static Product getProduct(String url, String cssQuery, String shop) {
         return getProduct(url, cssQuery, new ArrayList<>(), new ArrayList<>(), shop);
@@ -29,7 +30,6 @@ public class HTMLPageParser {
     }
 
     public static Product getProduct(String url, String cssQuery, List<String> extraItemsName, List<String> extraItemsPrice, String shop) {
-        Logger logger = Logger.getLogger("PageParser");
         Money price = new Money();
         String name;
         try {
@@ -55,13 +55,15 @@ public class HTMLPageParser {
                 name = name.replace(extra, "");
             }
         } catch (IOException e) {
-            logger.warning(e.getMessage());
+            logger.save(new Date() + "Exception in HTMLPageParser: " + e.getMessage());
             return new Product(null, null, shop, null, new Date(),
                     new Message(Status.ERROR, e.getMessage()));
         }
 
         if (price.getAmount() == 0) {
-            logger.warning("There is a null value, it is impossible to create a product!");
+            logger.save(new Date()
+                    + " ERROR in amount price from "
+                    + url + ". There is a null value, it is impossible to create a product!");
             return new Product(null, null, shop, null, new Date(),
                     new Message(Status.ERROR, "There is a null value, it is impossible to create a product!"));
         }
