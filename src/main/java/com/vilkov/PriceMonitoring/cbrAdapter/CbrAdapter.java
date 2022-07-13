@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class cbrAdapter implements CurrencyRateInterface {
+public class CbrAdapter implements CurrencyRateInterface {
 
     private final Logger logger = new Logger(Logger.getLoggerProperties().getProperty("cbrAdapterLogFolder"),
             Logger.getLoggerProperties().getProperty("cbrAdapterLogFileName"));

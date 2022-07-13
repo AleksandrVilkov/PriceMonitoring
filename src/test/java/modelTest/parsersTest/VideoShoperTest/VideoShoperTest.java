@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.model.parsers;
+package modelTest.parsersTest.VideoShoperTest;
 
 import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.parsers.VideoShoper.VideoShoperParser;

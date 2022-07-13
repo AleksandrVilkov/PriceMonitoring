@@ -1,4 +1,4 @@
-package com.vilkov.PriceMonitoring.model.parsers;
+package modelTest.loggerTest;
 
 import com.vilkov.PriceMonitoring.model.logger.Logger;
 import org.junit.Test;

@@ -1,15 +1,15 @@
-package com.vilkov.PriceMonitoring.model.parsers.CurrateAdapter;
+package cbrAdapterTest;
 
-import com.vilkov.PriceMonitoring.cbrAdapter.cbrAdapter;
+import com.vilkov.PriceMonitoring.cbrAdapter.CbrAdapter;
 import com.vilkov.PriceMonitoring.model.entity.Valute;
 import org.junit.Test;
 
 import java.util.List;
 
-public class CurrateAdapterTest {
+public class CbrAdapterTest {
     @Test
     public void getRateTest() {
-        cbrAdapter cbrAdapter = new cbrAdapter();
+        CbrAdapter cbrAdapter = new CbrAdapter();
       List<Valute> valutes =  cbrAdapter.getValutes();
     }
 }

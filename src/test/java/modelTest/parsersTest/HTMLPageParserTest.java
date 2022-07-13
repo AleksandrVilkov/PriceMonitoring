@@ -1,9 +1,10 @@
-package com.vilkov.PriceMonitoring.model.parsers;
+package modelTest.parsersTest;
 
 import com.vilkov.PriceMonitoring.model.Status;
 import com.vilkov.PriceMonitoring.model.entity.Currency;
 import com.vilkov.PriceMonitoring.model.entity.Product;
 import com.vilkov.PriceMonitoring.model.parsers.Mvideo.MvideoParser;
+import com.vilkov.PriceMonitoring.model.parsers.ParserHelper;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
