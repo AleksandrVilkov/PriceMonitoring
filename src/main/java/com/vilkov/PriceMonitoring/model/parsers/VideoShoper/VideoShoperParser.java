@@ -22,15 +22,14 @@ import java.util.Date;
 import java.util.Properties;
 
 public class VideoShoperParser implements Parser {
-    private final String SHOP = "https://video-shoper.ru";
     private static final Logger logger = new Logger(Logger.getLoggerProperties().getProperty("modelLogFolder"),
             Logger.getLoggerProperties().getProperty("modelLogFileName"));
 
-    //TODO подумать как обходить ошибку 503
+    //TODO подумать как обходить ошибку 503. Возникает из за защиты от DOS аттак. Как то связана с куки
     @Override
     public Product getProduct(String url) {
-        //Если приходит ошибка 503 = нужно посмотреть cookie и user-agent
         StringBuilder response = null;
+        String SHOP = "https://video-shoper.ru";
         try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/videoShoperRequestProperty.properties")) {
             Properties properties = new Properties();
             properties.load(fileInputStream);
@@ -65,7 +64,7 @@ public class VideoShoperParser implements Parser {
                 logger.save("successful response from VideoShoper.ru with product " + name + ". URL: " + url);
                 return new Product(name, money, SHOP, url, new Date(), message);
             } else {
-                logger.save("Cannot get Product from VideoShoper.ru. Err code: " + responseCode);
+                logger.save(new Date() + " Cannot get Product from VideoShoper.ru. Err code: " + responseCode);
                 Message message = new Message(Status.ERROR, "Cannot get Product from VideoShoper.ru. Err code: " + responseCode);
                 return new Product(null, null, SHOP, url, new Date(), message);
             }

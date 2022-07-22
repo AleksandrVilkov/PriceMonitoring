@@ -8,7 +8,7 @@ public class VideoShoperTest {
     @Test
     public void getProductTest() {
         VideoShoperParser videoShoperParser = new VideoShoperParser();
-        Product product = videoShoperParser.getProduct("https://video-shoper.ru/shipment/pylesos-dyson-v15-detect-absolute.html");
+        Product product = videoShoperParser.getProduct("https://video-shoper.ru/shipment/robot-pylesos-roborock-q7-max-plus-global-black.html");
         System.out.println(product);
     }
 }
