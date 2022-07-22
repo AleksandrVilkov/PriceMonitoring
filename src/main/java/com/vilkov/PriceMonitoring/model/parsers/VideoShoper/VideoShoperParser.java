@@ -5,6 +5,7 @@ import com.vilkov.PriceMonitoring.model.entity.Currency;
 import com.vilkov.PriceMonitoring.model.entity.Message;
 import com.vilkov.PriceMonitoring.model.entity.Money;
 import com.vilkov.PriceMonitoring.model.entity.Product;
+import com.vilkov.PriceMonitoring.model.logger.Logger;
 import com.vilkov.PriceMonitoring.model.parsers.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,8 +23,10 @@ import java.util.Properties;
 
 public class VideoShoperParser implements Parser {
     private final String SHOP = "https://video-shoper.ru";
+    private static final Logger logger = new Logger(Logger.getLoggerProperties().getProperty("modelLogFolder"),
+            Logger.getLoggerProperties().getProperty("modelLogFileName"));
 
-    //TODO покрыть логами
+    //TODO подумать как обходить ошибку 503
     @Override
     public Product getProduct(String url) {
         //Если приходит ошибка 503 = нужно посмотреть cookie и user-agent
@@ -59,8 +62,10 @@ public class VideoShoperParser implements Parser {
                 Money money = new Money();
                 money.setAmount(Double.parseDouble(price)).setCurrency(Currency.RUB);
                 Message message = new Message(Status.SUCCESS, "");
+                logger.save("successful response from VideoShoper.ru with product " + name + ". URL: " + url);
                 return new Product(name, money, SHOP, url, new Date(), message);
             } else {
+                logger.save("Cannot get Product from VideoShoper.ru. Err code: " + responseCode);
                 Message message = new Message(Status.ERROR, "Cannot get Product from VideoShoper.ru. Err code: " + responseCode);
                 return new Product(null, null, SHOP, url, new Date(), message);
             }

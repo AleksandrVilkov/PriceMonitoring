@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 public class HTMLPageParserTest {
-    //TODO покрыть тестами все паблик методы, поправить структуру директории
+    //TODO покрыть тестами все паблик методы
     @Test
     public void getProductTest() {
         String URL = "https://video-shoper.ru";
